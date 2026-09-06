@@ -1,6 +1,6 @@
 {
   "name": "@home/ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "peerDependencies": {
     "@angular/common": "^22.1.0",
     "@angular/core": "^22.1.0",
@@ -10,5 +10,11 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "exports": {
+    "./theme.css": {
+      "style": "./theme.css",
+      "default": "./theme.css"
+    }
+  }
 }
