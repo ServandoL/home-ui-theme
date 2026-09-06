@@ -6,6 +6,7 @@ import { ConfirmDeleteActionsComponent } from '../confirm-delete-actions/confirm
   standalone: true,
   imports: [ConfirmDeleteActionsComponent],
   templateUrl: 'mobile-record-card.component.html',
+  host: { class: 'block mb-3 last:mb-0' },
 })
 export class MobileRecordCardComponent {
   readonly deleting = input(false);
