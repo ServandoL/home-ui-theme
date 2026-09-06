@@ -1,0 +1,47 @@
+<div
+  class="fixed top-4 right-4 z-[100] flex flex-col gap-2 w-full max-w-sm px-4 lg:px-0 pointer-events-none"
+>
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div
+      class="flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg pointer-events-auto text-sm font-medium"
+      [class]="toast.type === 'success' ? 'app-success-toast' : 'app-button-danger'"
+    >
+      @if (toast.type === 'success') {
+        <svg
+          class="w-5 h-5 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      } @else {
+        <svg
+          class="w-5 h-5 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      }
+      <span class="flex-1">{{ toast.message }}</span>
+      <button
+        type="button"
+        (click)="toastService.dismiss(toast.id)"
+        class="app-toast-dismiss shrink-0 flex items-center justify-center w-7 h-7 rounded-full"
+        aria-label="Dismiss"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  }
+</div>

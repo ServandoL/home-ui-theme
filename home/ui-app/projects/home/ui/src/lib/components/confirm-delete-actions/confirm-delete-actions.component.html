@@ -1,0 +1,15 @@
+<span class="text-sm app-text-muted flex-1">{{ message() }}</span>
+<button
+  type="button"
+  (click)="confirmed.emit()"
+  class="app-button-danger px-3 py-2 text-sm font-semibold rounded-lg min-h-[44px]"
+>
+  {{ confirmText() }}
+</button>
+<button
+  type="button"
+  (click)="cancelled.emit()"
+  class="app-button-secondary px-3 py-2 text-sm font-semibold rounded-lg min-h-[44px]"
+>
+  {{ cancelText() }}
+</button>

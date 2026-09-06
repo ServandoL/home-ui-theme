@@ -1,0 +1,14 @@
+{
+  "name": "@home/ui",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^22.1.0",
+    "@angular/core": "^22.1.0",
+    "@angular/forms": "^22.1.0",
+    "@ng-icons/core": "^35.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

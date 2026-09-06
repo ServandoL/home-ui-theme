@@ -1,0 +1,29 @@
+<div [class]="containerClass()">
+  @if (label()) {
+    <label class="block text-sm font-medium app-text mb-1.5">
+      {{ label() }}
+      @if (required()) {
+        <span class="app-text-danger">*</span>
+      }
+      @if (optionalLabel()) {
+        <span class="app-text-subtle font-normal">{{ optionalLabel() }}</span>
+      }
+    </label>
+  }
+  <div class="relative">
+    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 app-text-muted pointer-events-none"
+      >$</span
+    >
+    <input
+      [formControl]="control()"
+      type="number"
+      [min]="min()"
+      [step]="step()"
+      [placeholder]="placeholder()"
+      [class]="inputClasses()"
+    />
+  </div>
+  @if (errorText() && invalid()) {
+    <p class="mt-1 text-sm app-text-danger">{{ errorText() }}</p>
+  }
+</div>

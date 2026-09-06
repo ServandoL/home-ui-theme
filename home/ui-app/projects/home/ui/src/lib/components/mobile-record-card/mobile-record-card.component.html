@@ -1,0 +1,30 @@
+<div class="app-card rounded-2xl p-4 shadow-sm">
+  <div class="flex items-start justify-between gap-3">
+    <ng-content select="[card-header]" />
+  </div>
+  <ng-content select="[card-body]" />
+  <div class="flex items-center gap-2 mt-3 pt-3 border-t app-border-subtle">
+    @if (deleting()) {
+      <app-confirm-delete-actions
+        [message]="deleteMessage()"
+        (confirmed)="confirmDelete.emit()"
+        (cancelled)="cancelDelete.emit()"
+      />
+    } @else {
+      <button
+        type="button"
+        (click)="edit.emit()"
+        class="app-button-accent-soft flex-1 py-2 text-sm font-semibold rounded-lg min-h-[44px]"
+      >
+        Edit
+      </button>
+      <button
+        type="button"
+        (click)="requestDelete.emit()"
+        class="app-button-danger-soft flex-1 py-2 text-sm font-semibold rounded-lg min-h-[44px]"
+      >
+        Delete
+      </button>
+    }
+  </div>
+</div>
