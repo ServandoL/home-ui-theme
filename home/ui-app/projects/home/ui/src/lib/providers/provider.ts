@@ -4,6 +4,21 @@ import {NavigationService} from '../services/navigation.service';
 import {ThemeService} from '../services/theme.service';
 import {ToastService} from '../services/toast.service';
 import {NavigationRoutes} from '../models/routes.model';
+import {provideIcons} from '@ng-icons/core';
+import {
+  phosphorAcornDuotone,
+  phosphorBeachBallDuotone,
+  phosphorCloudSnowDuotone,
+  phosphorFlowerDuotone,
+  phosphorFlowerLotusDuotone,
+  phosphorFlowerTulipDuotone,
+  phosphorLeafDuotone,
+  phosphorPersonSimpleSnowboardDuotone,
+  phosphorSnowflakeDuotone,
+  phosphorSunDuotone,
+  phosphorThermometerHotDuotone
+} from '@ng-icons/phosphor-icons/duotone';
+import { SeasonIconService } from "../services/season-icon.service";
 
 export interface ThemeConfig {
   appName: string;
@@ -18,10 +33,24 @@ export function provideHomeTheme(config: ThemeConfig) {
       inject(ThemeService).initialize();
       inject(NavigationService).setRoutes(config.routes);
     }),
+    provideIcons({
+      phosphorLeafDuotone,
+      phosphorAcornDuotone,
+      phosphorFlowerLotusDuotone,
+      phosphorFlowerTulipDuotone,
+      phosphorFlowerDuotone,
+      phosphorSunDuotone,
+      phosphorThermometerHotDuotone,
+      phosphorBeachBallDuotone,
+      phosphorSnowflakeDuotone,
+      phosphorCloudSnowDuotone,
+      phosphorPersonSimpleSnowboardDuotone
+    }),
     {
       provide: HOME_THEME_TOKEN,
       useValue: config
     },
+    SeasonIconService,
     NavigationService,
     ThemeService,
     ToastService

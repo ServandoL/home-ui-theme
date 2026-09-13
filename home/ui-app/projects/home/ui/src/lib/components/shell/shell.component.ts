@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NgIcon} from '@ng-icons/core';
 import {MobileBottomNavComponent} from '../mobile-bottom-nav/mobile-bottom-nav.component';
@@ -17,6 +17,7 @@ import {NavigationService} from '../../services/navigation.service';
     NgIcon,
     MobileBottomNavComponent,
     MobileSidenavComponent,
+
   ],
   templateUrl: './shell.component.html',
 })

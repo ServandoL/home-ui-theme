@@ -1,0 +1,13 @@
+<!-- season-background.component.html -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+  @for (item of icons(); track item) {
+    <div
+      class="absolute opacity-25 select-none transition-transform"
+      [style.top]="item.top"
+      [style.left]="item.left"
+      [style.transform]="item.rotate + ' ' + item.scale"
+    >
+      <ng-icon [name]="item.icon" />
+    </div>
+  }
+</div>

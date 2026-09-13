@@ -1,12 +1,13 @@
 {
   "name": "@home/ui",
-  "version": "1.1.5",
+  "version": "1.0.3",
   "peerDependencies": {
     "@angular/common": "^22.1.0",
     "@angular/core": "^22.1.0",
     "@angular/forms": "^22.1.0",
     "@ng-icons/core": "^35.0.1",
-    "@ng-icons/heroicons": "^35.0.1"
+    "@ng-icons/heroicons": "^35.0.1",
+    "@ng-icons/phosphor-icons": "^36.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
