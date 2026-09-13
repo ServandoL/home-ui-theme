@@ -1,0 +1,25 @@
+@if (navigationService.isSideNavOpen()) {
+  <div class="fixed inset-0 transition-opacity" (click)="close()"></div>
+}
+
+<aside
+  class="fixed right-0 top-0 bottom-0 w-64 bg-white shadow-xl transform transition-transform"
+  [class.translate-x-full]="!navigationService.isSideNavOpen()"
+>
+  <div class="p-4 border-b font-semibold">More</div>
+
+  <nav class="flex flex-col">
+    @for (route of navigationService.sideNavRoutes(); track route.name) {
+      <a
+        [routerLink]="route.url"
+        class="px-4 py-3 border-b flex items-center gap-2"
+        (click)="close()"
+      >
+        @if (route.icon?.name) {
+          <ng-icon [name]="route.icon?.name"/>
+        }
+        {{ route.name }}
+      </a>
+    }
+  </nav>
+</aside>

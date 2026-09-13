@@ -1,0 +1,30 @@
+<nav
+  class="fixed bottom-0 left-0 right-0 lg:hidden app-surface border-t app-border z-40 safe-area-bottom py-2"
+>
+  <div class="flex">
+    @for (route of navService.mainRoutes(); track route.name) {
+      <a
+        [routerLink]="route.url"
+        routerLinkActive="app-tab-link-active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="app-tab-link flex flex-col items-center justify-center flex-1 py-2 min-h-[56px] transition-colors gap-0.5"
+      >
+        @if (route.icon?.name) {
+          <ng-icon [name]="route.icon?.name"/>
+        }
+        <span class="text-[10px] font-medium">{{ route.name }}</span>
+      </a>
+    }
+
+    <!-- Fourth "More" button -->
+    @if (navService.sideNavRoutes().length > 0) {
+      <button
+        (click)="openMoreMenu()"
+        class="app-tab-link flex flex-col items-center justify-center flex-1 py-2 min-h-[56px] transition-colors gap-0.5"
+      >
+        <ng-icon name="more-horizontal"></ng-icon>
+        <span class="text-[10px] font-medium">More</span>
+      </button>
+    }
+  </div>
+</nav>
