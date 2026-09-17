@@ -18,7 +18,8 @@ import {
   phosphorSunDuotone,
   phosphorThermometerHotDuotone
 } from '@ng-icons/phosphor-icons/duotone';
-import { SeasonIconService } from "../services/season-icon.service";
+import {heroMoonSolid, heroQuestionMarkCircleSolid, heroSunSolid} from '@ng-icons/heroicons/solid';
+import {SeasonIconService} from "../services/season-icon.service";
 
 export interface ThemeConfig {
   appName: string;
@@ -34,6 +35,9 @@ export function provideHomeTheme(config: ThemeConfig) {
       inject(NavigationService).setRoutes(config.routes);
     }),
     provideIcons({
+      heroSunSolid,
+      heroMoonSolid,
+      heroQuestionMarkCircleSolid,
       phosphorLeafDuotone,
       phosphorAcornDuotone,
       phosphorFlowerLotusDuotone,
