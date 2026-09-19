@@ -12,7 +12,7 @@ export * from './lib/components/empty-state/empty-state.component';
 export * from './lib/components/currency-input/currency-input.component';
 export * from './lib/components/mobile-record-card/mobile-record-card.component';
 export * from './lib/components/shell/shell.component';
-export * from './lib/components/side-nav/side-nav.component';
+export * from './lib/components/side-nav/mobile-sidenav-content.component';
 export * from './lib/components/mobile-bottom-nav/mobile-bottom-nav.component';
 export * from './lib/components/season-background/season-background.component';
 export * from './lib/validators/dateYMDValidator';

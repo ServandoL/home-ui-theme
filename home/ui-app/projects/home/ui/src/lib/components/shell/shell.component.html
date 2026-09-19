@@ -40,8 +40,8 @@
     </main>
   </div>
 
-  @if (navigationService.sideNavRoutes().length) {
-    <app-mobile-sidenav/>
+  @if (navigationService.sideNavRoutes().length && navigationService.isSideNavOpen()) {
+      <app-mobile-sidenav-content/>
   }
 
   <!-- Mobile bottom tab bar -->

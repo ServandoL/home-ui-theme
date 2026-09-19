@@ -1,0 +1,24 @@
+<aside
+  class="fixed flex flex-col justify-end right-0 top-0 bottom-0 w-64 shadow-xl app-card z-30"
+>
+  <div class="p-4 app-border-subtle font-semibold">More</div>
+
+  <nav [style.padding-bottom]="'73px'">
+    <ul class="flex flex-col gap-2">
+      @for (route of navigationService.sideNavRoutes(); track route.name) {
+        <li>
+          <a
+            [routerLink]="route.url"
+            (click)="navigationService.closeSidenav()"
+            class="px-4 py-3 app-border-subtle flex items-center gap-2"
+          >
+            @if (route.icon?.name) {
+              <ng-icon [name]="route.icon?.name"/>
+            }
+            {{ route.name }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</aside>

@@ -9,9 +9,9 @@ import {NavigationService} from '../../services/navigation.service';
   templateUrl: './mobile-bottom-nav.component.html',
 })
 export class MobileBottomNavComponent {
-  readonly navService = inject(NavigationService);
+  protected readonly navService = inject(NavigationService);
 
   openMoreMenu() {
-    this.navService.openSideNav();
+    this.navService.openSidenav();
   }
 }

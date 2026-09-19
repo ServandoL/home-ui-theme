@@ -16,7 +16,8 @@ import {
   phosphorPersonSimpleSnowboardDuotone,
   phosphorSnowflakeDuotone,
   phosphorSunDuotone,
-  phosphorThermometerHotDuotone
+  phosphorThermometerHotDuotone,
+  phosphorSidebarDuotone
 } from '@ng-icons/phosphor-icons/duotone';
 import {heroMoonSolid, heroQuestionMarkCircleSolid, heroSunSolid} from '@ng-icons/heroicons/solid';
 import {SeasonIconService} from "../services/season-icon.service";
@@ -48,7 +49,8 @@ export function provideHomeTheme(config: ThemeConfig) {
       phosphorBeachBallDuotone,
       phosphorSnowflakeDuotone,
       phosphorCloudSnowDuotone,
-      phosphorPersonSimpleSnowboardDuotone
+      phosphorPersonSimpleSnowboardDuotone,
+      phosphorSidebarDuotone
     }),
     {
       provide: HOME_THEME_TOKEN,

@@ -4,9 +4,9 @@ import {NgIcon} from '@ng-icons/core';
 import {MobileBottomNavComponent} from '../mobile-bottom-nav/mobile-bottom-nav.component';
 import {ToastContainerComponent} from '../toast-container/toast-container.component';
 import {ThemeMode, ThemeService} from '../../services/theme.service';
-import {MobileSidenavComponent} from '../side-nav/side-nav.component';
 import {HOME_THEME_TOKEN} from '../../providers/provider';
 import {NavigationService} from '../../services/navigation.service';
+import {MobileSidenavContentComponent} from '../side-nav/mobile-sidenav-content.component';
 
 @Component({
   selector: 'app-shell',
@@ -16,7 +16,7 @@ import {NavigationService} from '../../services/navigation.service';
     ToastContainerComponent,
     NgIcon,
     MobileBottomNavComponent,
-    MobileSidenavComponent,
+    MobileSidenavContentComponent,
 
   ],
   templateUrl: './shell.component.html',
