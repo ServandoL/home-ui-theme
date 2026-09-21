@@ -5,11 +5,11 @@
 
   <nav [style.padding-bottom]="'73px'">
     <ul class="flex flex-col gap-2">
-      @for (route of navigationService.sideNavRoutes(); track route.name) {
+      @for (route of navigationService.additionalRoutes(); track route.name) {
         <li>
           <a
             [routerLink]="route.url"
-            (click)="navigationService.closeSidenav()"
+            (click)="navigationService.closeMenu()"
             class="px-4 py-3 app-border-subtle flex items-center gap-2"
           >
             @if (route.icon?.name) {

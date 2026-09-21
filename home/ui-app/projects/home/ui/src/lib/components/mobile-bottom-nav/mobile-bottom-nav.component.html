@@ -1,6 +1,33 @@
+@if (navService.showAppDrawer() && navService.isMenuOpen()) {
+  <div class="fixed inset-0 z-30 bg-black/30 lg:hidden" (click)="navService.toggleMenu()"></div>
+}
+
 <nav
   class="fixed bottom-0 left-0 right-0 lg:hidden app-surface border-t app-border z-40 safe-area-bottom py-2"
 >
+  <!-- Expandable panel -->
+  @if (navService.showAppDrawer() && navService.isMenuOpen()) {
+    <div
+      id="more-panel"
+      class="grid transition-[grid-template-rows] duration-200 ease-out"
+      [class]="navService.isMenuOpen() ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+      [attr.inert]="navService.isMenuOpen() ? null : ''"
+    >
+      <div class="overflow-hidden">
+        <div class="grid grid-cols-4 gap-1 pb-2 mb-2 border-b app-border">
+          @for (route of navService.additionalRoutes(); track route.name) {
+            <a [routerLink]="route.url" routerLinkActive="app-tab-link-active"
+               (click)="navService.closeMenu()"
+               class="app-tab-link flex flex-col items-center justify-center py-2 min-h-[56px] gap-0.5">
+              @if (route.icon?.name) { <ng-icon [name]="route.icon?.name" /> }
+              <span class="text-[10px] font-medium">{{ route.name }}</span>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
   <div class="flex">
     @for (route of navService.mainRoutes(); track route.name) {
       <a
@@ -17,13 +44,27 @@
     }
 
     <!-- Fourth "More" button -->
-    @if (navService.sideNavRoutes().length > 0) {
+    @if (navService.showSideMenu()) {
       <button
         (click)="openMoreMenu()"
         class="app-tab-link flex flex-col items-center justify-center flex-1 py-2 min-h-[56px] transition-colors gap-0.5"
       >
         <ng-icon name="phosphorSidebarDuotone"></ng-icon>
         <span class="text-[10px] font-medium">More</span>
+      </button>
+    }
+    @if (navService.showAppDrawer()) {
+      <button
+        (click)="navService.toggleMenu()"
+        class="app-tab-link flex flex-col items-center justify-center flex-1 py-2 min-h-[56px] transition-colors gap-0.5"
+      >
+        @if (!navService.isMenuOpen()) {
+          <ng-icon name="phosphorTrayArrowUpDuotone"></ng-icon>
+          <span class="text-[10px] font-medium">More</span>
+        } @else {
+          <ng-icon name="phosphorTrayArrowDownDuotone"></ng-icon>
+          <span class="text-[10px] font-medium">Close</span>
+        }
       </button>
     }
   </div>

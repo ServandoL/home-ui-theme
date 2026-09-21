@@ -1,10 +1,10 @@
 // Create a token for a complex type
-import {inject, InjectionToken, provideAppInitializer} from '@angular/core';
-import {NavigationService} from '../services/navigation.service';
-import {ThemeService} from '../services/theme.service';
-import {ToastService} from '../services/toast.service';
-import {NavigationRoutes} from '../models/routes.model';
-import {provideIcons} from '@ng-icons/core';
+import { inject, InjectionToken, provideAppInitializer } from '@angular/core';
+import { NavigationService } from '../services/navigation.service';
+import { ThemeService } from '../services/theme.service';
+import { ToastService } from '../services/toast.service';
+import { NavigationRoutes } from '../models/routes.model';
+import { provideIcons } from '@ng-icons/core';
 import {
   phosphorAcornDuotone,
   phosphorBeachBallDuotone,
@@ -14,17 +14,25 @@ import {
   phosphorFlowerTulipDuotone,
   phosphorLeafDuotone,
   phosphorPersonSimpleSnowboardDuotone,
+  phosphorSidebarDuotone,
   phosphorSnowflakeDuotone,
   phosphorSunDuotone,
   phosphorThermometerHotDuotone,
-  phosphorSidebarDuotone
+  phosphorTrayArrowDownDuotone,
+  phosphorTrayArrowUpDuotone,
 } from '@ng-icons/phosphor-icons/duotone';
-import {heroMoonSolid, heroQuestionMarkCircleSolid, heroSunSolid} from '@ng-icons/heroicons/solid';
-import {SeasonIconService} from "../services/season-icon.service";
+import {
+  heroMoonSolid,
+  heroQuestionMarkCircleSolid,
+  heroSunSolid,
+} from '@ng-icons/heroicons/solid';
+import { SeasonIconService } from '../services/season-icon.service';
+import { NavExpandType } from '../models/bottom-nav';
 
 export interface ThemeConfig {
   appName: string;
-  routes: NavigationRoutes[]
+  routes: NavigationRoutes[];
+  navExpandType?: NavExpandType;
 }
 
 export const HOME_THEME_TOKEN = new InjectionToken<ThemeConfig>('app.config');
@@ -33,7 +41,9 @@ export function provideHomeTheme(config: ThemeConfig) {
   return [
     provideAppInitializer(() => {
       inject(ThemeService).initialize();
-      inject(NavigationService).setRoutes(config.routes);
+      const navService = inject(NavigationService);
+      navService.setRoutes(config.routes);
+      navService.setNavExpandType(config.navExpandType ?? 'bottom-drawer');
     }),
     provideIcons({
       heroSunSolid,
@@ -50,15 +60,17 @@ export function provideHomeTheme(config: ThemeConfig) {
       phosphorSnowflakeDuotone,
       phosphorCloudSnowDuotone,
       phosphorPersonSimpleSnowboardDuotone,
-      phosphorSidebarDuotone
+      phosphorSidebarDuotone,
+      phosphorTrayArrowUpDuotone,
+      phosphorTrayArrowDownDuotone,
     }),
     {
       provide: HOME_THEME_TOKEN,
-      useValue: config
+      useValue: config,
     },
     SeasonIconService,
     NavigationService,
     ThemeService,
-    ToastService
-  ]
+    ToastService,
+  ];
 }
