@@ -14,6 +14,8 @@ export * from './lib/components/mobile-record-card/mobile-record-card.component'
 export * from './lib/components/shell/shell.component';
 export * from './lib/components/side-nav/mobile-sidenav-content.component';
 export * from './lib/components/mobile-bottom-nav/mobile-bottom-nav.component';
+export * from './lib/components/desktop-sidenav/desktop-sidenav.component';
+export * from './lib/components/theme-toggle/theme-toggle.component';
 export * from './lib/components/season-background/season-background.component';
 export * from './lib/validators/dateYMDValidator';
 export * from './lib/models/routes.model';

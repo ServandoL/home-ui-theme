@@ -77,18 +77,14 @@ export class ThemeService {
     this.mode.set(mode);
 
     if (persist) {
-      localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
-
-      if (mode === 'party' && palette) {
-        localStorage.setItem(PARTY_PALETTE_STORAGE_KEY, JSON.stringify(palette));
-      } else {
-        localStorage.removeItem(PARTY_PALETTE_STORAGE_KEY);
-      }
+      writeStorage(THEME_MODE_STORAGE_KEY, mode);
+      writeStorage(PARTY_PALETTE_STORAGE_KEY, mode === 'party' && palette ? JSON.stringify(palette) : null);
     }
   }
 
   private getPreferredInitialMode(): ThemeMode {
     if (
+      typeof window !== 'undefined' &&
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
@@ -99,21 +95,28 @@ export class ThemeService {
   }
 
   private readStoredMode(): ThemeMode | null {
-    const value = localStorage.getItem(THEME_MODE_STORAGE_KEY);
+    const value = readStorage(THEME_MODE_STORAGE_KEY);
 
     return value === 'light' || value === 'dark' || value === 'party' ? value : null;
   }
 
   private readStoredPalette(): PartyPalette | null {
-    const raw = localStorage.getItem(PARTY_PALETTE_STORAGE_KEY);
+    const raw = readStorage(PARTY_PALETTE_STORAGE_KEY);
 
     if (!raw) {
       return null;
     }
 
-    const parsed = JSON.parse(raw) as Partial<PartyPalette>;
+    let parsed: Partial<PartyPalette> | null;
+
+    try {
+      parsed = JSON.parse(raw) as Partial<PartyPalette> | null;
+    } catch {
+      return null;
+    }
 
     if (
+      parsed &&
       parsed.accent &&
       parsed.accentHover &&
       parsed.accentPressed &&
@@ -189,6 +192,37 @@ export class ThemeService {
       success: hslToHex(successHue, 76, 68),
       successSoft: hslToHex(successHue, 54, 18),
     };
+  }
+}
+
+// localStorage can be missing (SSR, Node without --localstorage-file) or throw (blocked storage).
+function getStorage(): Storage | null {
+  try {
+    return typeof localStorage === 'undefined' ? null : localStorage;
+  } catch {
+    return null;
+  }
+}
+
+function readStorage(key: string): string | null {
+  try {
+    return getStorage()?.getItem(key) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function writeStorage(key: string, value: string | null): void {
+  try {
+    const storage = getStorage();
+
+    if (value === null) {
+      storage?.removeItem(key);
+    } else {
+      storage?.setItem(key, value);
+    }
+  } catch {
+    // Persistence is best-effort; the theme still applies for this session.
   }
 }
 

@@ -111,6 +111,44 @@ describe('ThemeService', () => {
 
     mathRandom.mockRestore();
   });
+
+  it('works when localStorage is unavailable', () => {
+    vi.stubGlobal('localStorage', undefined);
+    const service = TestBed.inject(ThemeService);
+
+    expect(() => service.initialize()).not.toThrow();
+    expect(() => service.setMode('dark')).not.toThrow();
+    expect(document.documentElement.dataset['theme']).toBe('dark');
+
+    vi.stubGlobal('localStorage', createStorageMock());
+  });
+
+  it('works when localStorage throws', () => {
+    const throwing = createStorageMock();
+    throwing.getItem = () => {
+      throw new Error('blocked');
+    };
+    throwing.setItem = () => {
+      throw new Error('blocked');
+    };
+    vi.stubGlobal('localStorage', throwing);
+    const service = TestBed.inject(ThemeService);
+
+    expect(() => service.initialize()).not.toThrow();
+    expect(() => service.setMode('party')).not.toThrow();
+    expect(service.mode()).toBe('party');
+  });
+
+  it('falls back to a fresh palette when the stored one is corrupted', () => {
+    globalThis.localStorage.setItem('ngx-shared-ui.theme-mode', 'party');
+    globalThis.localStorage.setItem('ngx-shared-ui.party-palette', '{not json');
+    const service = TestBed.inject(ThemeService);
+
+    service.initialize();
+
+    expect(service.mode()).toBe('party');
+    expect(document.documentElement.style.getPropertyValue('--theme-accent')).toMatch(/^#/);
+  });
 });
 
 function cleanupThemeDom(): void {

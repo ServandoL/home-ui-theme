@@ -22,6 +22,7 @@ export class NavigationService {
   private readonly _routes = signal<NavigationRoutes[]>([]);
 
   readonly isMenuOpen = this._isMenuOpen.asReadonly();
+  readonly routes = this._routes.asReadonly();
   readonly mainRoutes = computed(() => this._routes().slice(0, MAIN_ROUTE_COUNT));
   readonly additionalRoutes = computed(() => this._routes().slice(MAIN_ROUTE_COUNT));
   readonly navExpandtype = this._navExpandType.asReadonly();

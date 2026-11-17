@@ -1,0 +1,29 @@
+<aside class="hidden lg:flex fixed inset-y-0 left-0 z-30 w-64 flex-col app-surface border-r app-border">
+  <div class="px-5 pt-6 pb-4">
+    <p class="text-base font-semibold app-text">{{ config.appName }}</p>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto px-3" aria-label="Main">
+    <ul class="flex flex-col gap-1">
+      @for (route of navService.routes(); track route.name) {
+        <li>
+          <a
+            [routerLink]="route.url"
+            routerLinkActive="app-nav-link-active"
+            class="app-nav-link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors"
+          >
+            @if (route.icon?.name) {
+              <ng-icon [name]="route.icon?.name"/>
+            }
+            {{ route.name }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <div class="px-5 py-4 border-t app-border">
+    <p class="text-xs app-text-muted mb-2">Appearance</p>
+    <app-theme-toggle/>
+  </div>
+</aside>

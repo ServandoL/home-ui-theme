@@ -30,14 +30,14 @@ importers:
         specifier: ^22.1.0
         version: 22.1.5(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@angular/platform-browser@22.1.5(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@ng-icons/core':
-        specifier: ^35.0.1
-        version: 35.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)
+        specifier: ^36.1.0
+        version: 36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)
       '@ng-icons/heroicons':
-        specifier: ^35.0.1
-        version: 35.1.0
+        specifier: ^36.1.0
+        version: 36.1.0(@ng-icons/core@36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))
       '@ng-icons/phosphor-icons':
-        specifier: ^36.0.0
-        version: 36.0.0(@ng-icons/core@35.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))
+        specifier: ^36.1.0
+        version: 36.1.0(@ng-icons/core@36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
@@ -941,8 +941,8 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@ng-icons/core@35.1.0':
-    resolution: {integrity: sha512-GfJXjJx4PRSf6hWTcCWrrqwVDQmAc5KGIbk2eAekebDt0ZcJbCLMhax6u3UoEzHViYMyDtXo3a+t489FvO3WwA==}
+  '@ng-icons/core@36.1.0':
+    resolution: {integrity: sha512-2o6M/K29lPN3wGq/nOxqVjzDV25HHIh6PXm2/ISwKa0eFbbDYwYkg7g9msjPS40OmQpqBgSVLIwinEifEOQNjg==}
     peerDependencies:
       '@angular-devkit/schematics': '>=22.0.0'
       '@angular/common': '>=22.0.0'
@@ -950,13 +950,15 @@ packages:
       '@schematics/angular': '>=22.0.0'
       rxjs: ^6.5.3 || ^7.4.0
 
-  '@ng-icons/heroicons@35.1.0':
-    resolution: {integrity: sha512-NNBsrJEhJVSDM7EMPj1AUmtSOGbBbiilheNm6pexBSFN9Z61CZ2ya0BVKYAV9DDG/3Mznwxlko0R4whyl+EM8A==}
-
-  '@ng-icons/phosphor-icons@36.0.0':
-    resolution: {integrity: sha512-5NNSV8JIYWhvQ4M+5fd9brq7B8HHGmFUiTcLSQLH4EgCW0vyRknE3dQRlBXLvcMXo0AlM0DWzUDm7ifS71rHEA==}
+  '@ng-icons/heroicons@36.1.0':
+    resolution: {integrity: sha512-p5LDbDaCCFvPwS5l1oGWd5YgOzWkMKHEIO8xswuuGKeSwUhUBol/WGlUnf5q+LtiAgbaTylGG5zdkgQB/wyahQ==}
     peerDependencies:
-      '@ng-icons/core': ^36.0.0
+      '@ng-icons/core': ^36.1.0
+
+  '@ng-icons/phosphor-icons@36.1.0':
+    resolution: {integrity: sha512-vGio73354YoAt9O3fYYsfp/uBiIc9anjID4dvh0hd1VcOB0C0THJ8aVDlxvoMZDybDqXdm7zJqFeurGwQlTLWw==}
+    peerDependencies:
+      '@ng-icons/core': ^36.1.0
 
   '@oxc-parser/binding-android-arm-eabi@0.142.0':
     resolution: {integrity: sha512-ZiRGDutGsv1G6bL/ozy/koC0Sv39T1DqyoC4KD1DOy9ZoACm1O5UWhEK2c02Qdk+4lfLVkvFa/mQ0fm/4h1BtQ==}
@@ -3812,7 +3814,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@ng-icons/core@35.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)':
+  '@ng-icons/core@36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)':
     dependencies:
       '@angular-devkit/schematics': 22.1.7(chokidar@5.0.0)
       '@angular/common': 22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2)
@@ -3821,13 +3823,14 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@ng-icons/heroicons@35.1.0':
+  '@ng-icons/heroicons@36.1.0(@ng-icons/core@36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))':
     dependencies:
+      '@ng-icons/core': 36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)
       tslib: 2.8.1
 
-  '@ng-icons/phosphor-icons@36.0.0(@ng-icons/core@35.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))':
+  '@ng-icons/phosphor-icons@36.1.0(@ng-icons/core@36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2))':
     dependencies:
-      '@ng-icons/core': 35.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)
+      '@ng-icons/core': 36.1.0(@angular-devkit/schematics@22.1.7(chokidar@5.0.0))(@angular/common@22.1.5(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.1.5(@angular/compiler@22.1.5)(rxjs@7.8.2))(@schematics/angular@22.1.7(chokidar@5.0.0))(rxjs@7.8.2)
       tslib: 2.8.1
 
   '@oxc-parser/binding-android-arm-eabi@0.142.0':
