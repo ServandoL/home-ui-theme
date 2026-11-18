@@ -137,7 +137,7 @@ button {
   border-color: var(--theme-border-subtle);
 }
 
-.app-divide > :not([hidden]) ~ :not([hidden]) {
+.app-divide > :not(:last-child) {
   border-color: var(--theme-border-subtle);
 }
 
