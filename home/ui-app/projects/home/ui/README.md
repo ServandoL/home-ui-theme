@@ -48,16 +48,16 @@ npm install @angular/cdk @ng-icons/core @ng-icons/heroicons @ng-icons/phosphor-i
 The library is distributed as a packed tarball. From the workspace root:
 
 ```bash
-pnpm build:lib          # builds dist/home/ui and runs `npm pack` inside it
+pnpm build:lib          # builds dist/home/ui, runs `npm pack`, moves the .tgz to builds/
 ```
 
 Then, in the consuming app:
 
 ```bash
-npm install /path/to/home-ui-<version>.tgz
+npm install /path/to/ui-app/builds/home-ui-<version>.tgz
 ```
 
-Previously packed versions are kept in `builds/`.
+Every packed version is kept in `builds/` (git-ignored).
 
 ---
 
@@ -380,7 +380,7 @@ Holds routes and menu state for the shell. See
 | `getIcons(season)` | Icon names used for that season. |
 | `setIcons(record)` | Override the icon set. Icons you supply must be registered with `provideIcons`. |
 
-### `BaseCrudService<T>`
+### `BaseCrudService<T, TCreate, TUpdate>`
 
 Abstract base for HTTP CRUD services with `data`, `loading`, and `error`
 signals. It has no knowledge of your environment config — pass a fully
@@ -507,7 +507,7 @@ From the workspace root (`home/ui-app`):
 
 ```bash
 ng build @home/ui        # build the library to dist/home/ui
-pnpm build:lib           # clean build + npm pack (produces a .tgz)
+pnpm build:lib           # clean build + npm pack (.tgz lands in builds/)
 ng test @home/ui         # run library unit tests (Vitest)
 pnpm start               # serve the demo app
 ```
