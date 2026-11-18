@@ -309,8 +309,10 @@ button {
   background-size: 1rem;
 }
 
+/* Same selectors as above so specificity ties and this later rule wins. */
 @media (forced-colors: active) {
-  .app-select {
+  .app-select:not([multiple]):not([size]),
+  .app-select[size='1'] {
     appearance: auto;
     background-image: none;
   }
