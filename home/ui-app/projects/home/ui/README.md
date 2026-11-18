@@ -476,7 +476,7 @@ Use the classes for color, and Tailwind for layout and spacing.
 `--theme-danger`, `--theme-danger-hover`, `--theme-danger-soft`,
 `--theme-warning`, `--theme-warning-soft`, `--theme-info`,
 `--theme-info-soft`, `--theme-success`, `--theme-success-soft`,
-`--theme-input-bg`, `--theme-overlay`.
+`--theme-input-bg`, `--theme-overlay`, `--theme-select-chevron`.
 
 **Utility classes:**
 
@@ -498,6 +498,17 @@ Use the classes for color, and Tailwind for layout and spacing.
 <button class="app-button-primary px-4 py-2 rounded-lg">Save</button>
 <span class="app-tag-success px-2 py-0.5 rounded-full text-xs">Paid</span>
 ```
+
+`app-select` replaces the browser's dropdown arrow with a themed chevron
+(`appearance: none`) placed `0.75rem` from the right edge. `theme.css` doesn't
+set padding, so leave room for the chevron yourself — `pr-9` fits it:
+
+```html
+<select class="app-select border rounded-lg pl-3 pr-9 py-2">…</select>
+```
+
+The chevron is skipped for `<select multiple>` and list boxes (`size` > 1), and
+the native arrow returns in forced-colors (high-contrast) mode.
 
 ---
 

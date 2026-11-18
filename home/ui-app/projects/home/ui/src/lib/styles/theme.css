@@ -27,6 +27,7 @@
   --theme-success-soft: #d1fae5;
   --theme-input-bg: #ffffff;
   --theme-overlay: rgba(15, 23, 42, 0.56);
+  --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23475569' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
 }
 
 html[data-theme='dark'],
@@ -61,6 +62,7 @@ html[data-theme='dark'] {
   --theme-success-soft: #0d3226;
   --theme-input-bg: #0b1220;
   --theme-overlay: rgba(2, 6, 23, 0.74);
+  --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23cbd5e1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
 }
 
 html[data-theme='party'] {
@@ -78,6 +80,7 @@ html[data-theme='party'] {
   --theme-danger-soft: #3e1224;
   --theme-input-bg: #0f1020;
   --theme-overlay: rgba(9, 9, 15, 0.82);
+  --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ddd6fe' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
 }
 
 html,
@@ -294,6 +297,23 @@ button {
   background-color: var(--theme-input-bg);
   border-color: var(--theme-border);
   color: var(--theme-text);
+}
+
+/* Native arrow ignores padding and differs per browser; draw our own. Apps add pr-9. */
+.app-select:not([multiple]):not([size]),
+.app-select[size='1'] {
+  appearance: none;
+  background-image: var(--theme-select-chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+@media (forced-colors: active) {
+  .app-select {
+    appearance: auto;
+    background-image: none;
+  }
 }
 
 .app-input::placeholder {
