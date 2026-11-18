@@ -408,6 +408,19 @@ export class WidgetsService extends BaseCrudService<Widget> {
 
 Abstract methods: `getData()`, `create(data)`, `update(id, data)`, `delete(id)`.
 
+The full signature is `BaseCrudService<T, TCreate = Omit<T, 'id'>, TUpdate = TCreate>`.
+When the server sets fields such as `createdAt` or `createdBy`, pass narrower
+input types so callers don't have to supply them:
+
+```ts
+type WidgetInput = Pick<Widget, 'name' | 'color'>;
+
+export class WidgetsService extends BaseCrudService<Widget, WidgetInput, Partial<WidgetInput>> {
+  create(data: WidgetInput) { /* … */ }
+  update(id: string, data: Partial<WidgetInput>) { /* … */ }
+}
+```
+
 ---
 
 ## Validators
