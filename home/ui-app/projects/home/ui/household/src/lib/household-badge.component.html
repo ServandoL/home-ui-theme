@@ -1,0 +1,19 @@
+@if (context.current(); as household) {
+  <div class="flex items-center gap-2 rounded-xl px-3 py-2 app-surface-muted">
+    <div class="flex min-w-0 flex-1 flex-col">
+      <span class="text-xs app-text-muted">Household</span>
+      <a class="truncate text-sm font-medium app-text" [href]="context.manageUrl()" [title]="'Manage ' + household.name">
+        {{ household.name }}
+      </a>
+    </div>
+    @if (context.households().length > 1) {
+      <button
+        type="button"
+        class="app-button-secondary rounded-lg px-3 py-1.5 text-xs font-semibold min-h-[36px]"
+        (click)="context.chooseAgain()"
+      >
+        Switch
+      </button>
+    }
+  </div>
+}

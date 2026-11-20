@@ -13,6 +13,11 @@
           </div>
           <app-theme-toggle/>
         </div>
+        @if (account) {
+          <div class="mt-3">
+            <ng-container *ngComponentOutlet="account" />
+          </div>
+        }
       </header>
       <router-outlet/>
     </main>

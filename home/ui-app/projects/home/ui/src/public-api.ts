@@ -21,4 +21,5 @@ export * from './lib/validators/dateYMDValidator';
 export * from './lib/models/routes.model';
 export * from './lib/services/navigation.service';
 export * from './lib/providers/provider';
+export * from './lib/providers/shell-account';
 export * from './lib/services/season-icon.service';

@@ -1,0 +1,56 @@
+<section class="mx-auto flex w-full max-w-lg flex-col gap-4 px-4 py-10" aria-labelledby="household-picker-title">
+  <div class="flex flex-col gap-1">
+    <h1 id="household-picker-title" class="text-xl font-semibold app-text">Choose a household</h1>
+    <p class="text-sm app-text-muted">You’re in more than one. This app remembers your choice on this device.</p>
+  </div>
+
+  <ul class="flex flex-col gap-2">
+    @for (household of context.households(); track household.id) {
+      <li>
+        <button
+          type="button"
+          class="app-card app-row-hover flex w-full items-center gap-3 rounded-2xl border app-border px-4 py-3 text-left min-h-[44px]"
+          [attr.aria-current]="household.id === context.currentId() ? 'true' : null"
+          (click)="context.select(household.id)"
+        >
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="font-medium app-text">{{ household.name }}</span>
+            @if (formatAddress(household.address); as address) {
+              <span class="truncate text-sm app-text-muted">{{ address }}</span>
+            }
+            <span class="text-xs app-text-subtle">
+              {{ household.memberCount }} {{ household.memberCount === 1 ? 'member' : 'members' }}
+            </span>
+          </span>
+          @if (household.role === 'ADMIN') {
+            <span class="rounded-full px-2 py-0.5 text-xs font-semibold app-tag-info">Admin</span>
+          }
+          @if (household.id === context.currentId()) {
+            <span class="rounded-full px-2 py-0.5 text-xs font-semibold app-tag-success">Current</span>
+          }
+        </button>
+      </li>
+    }
+  </ul>
+
+  @if (context.invites().length > 0) {
+    <p class="rounded-xl px-4 py-3 text-sm app-info-soft app-text">
+      You have {{ context.invites().length }}
+      {{ context.invites().length === 1 ? 'invitation' : 'invitations' }} waiting.
+      <a class="app-link font-medium" [href]="context.manageUrl()">Open Home to accept</a>.
+    </p>
+  }
+
+  <div class="flex flex-wrap items-center gap-3">
+    @if (context.current()) {
+      <button
+        type="button"
+        class="app-button-secondary rounded-lg px-4 py-2 text-sm font-semibold min-h-[44px]"
+        (click)="context.cancelChoose()"
+      >
+        Cancel
+      </button>
+    }
+    <a class="app-link text-sm font-medium" [href]="context.manageUrl()">Manage households</a>
+  </div>
+</section>

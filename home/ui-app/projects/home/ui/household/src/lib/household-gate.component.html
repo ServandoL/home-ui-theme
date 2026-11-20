@@ -1,0 +1,52 @@
+@if (session.expired()) {
+  <div
+    class="fixed inset-x-0 top-0 z-50 flex flex-wrap items-center justify-center gap-3 px-4 py-3 app-warning-soft app-text shadow-sm"
+    role="alert"
+  >
+    <span class="text-sm font-medium">You’ve been signed out.</span>
+    <button
+      type="button"
+      class="app-button-primary rounded-lg px-4 py-2 min-h-[44px] text-sm font-semibold"
+      (click)="session.signInAgain()"
+    >
+      Sign in again
+    </button>
+  </div>
+}
+
+@switch (context.status()) {
+  @case ('ready') {
+    <ng-container [ngTemplateOutlet]="app()" />
+  }
+  @case ('choose') {
+    <div class="min-h-dvh app-shell-bg">
+      <app-household-picker />
+    </div>
+  }
+  @case ('loading') {
+    <div class="flex min-h-dvh items-center justify-center app-shell-bg" role="status">
+      <span class="app-spinner" aria-hidden="true"></span>
+      <span class="sr-only">Loading your households</span>
+    </div>
+  }
+  @case ('none') {
+    <div class="flex min-h-dvh items-center justify-center px-4 app-shell-bg">
+      <p class="text-sm app-text-muted">
+        Taking you to set up a household…
+        <a class="app-link font-medium" [href]="context.welcomeUrl()">Continue</a>
+      </p>
+    </div>
+  }
+  @case ('error') {
+    <div class="flex min-h-dvh flex-col items-center justify-center gap-3 px-4 app-shell-bg" role="alert">
+      <p class="text-sm app-text">Couldn’t load your households.</p>
+      <button
+        type="button"
+        class="app-button-primary rounded-lg px-4 py-2 min-h-[44px] text-sm font-semibold"
+        (click)="context.reload()"
+      >
+        Try again
+      </button>
+    </div>
+  }
+}

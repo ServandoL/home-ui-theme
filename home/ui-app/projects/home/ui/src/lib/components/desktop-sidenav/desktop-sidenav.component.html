@@ -1,6 +1,9 @@
 <aside class="hidden lg:flex fixed inset-y-0 left-0 z-30 w-64 flex-col app-surface border-r app-border">
-  <div class="px-5 pt-6 pb-4">
+  <div class="flex flex-col gap-3 px-5 pt-6 pb-4">
     <p class="text-base font-semibold app-text">{{ config.appName }}</p>
+    @if (account) {
+      <ng-container *ngComponentOutlet="account" />
+    }
   </div>
 
   <nav class="flex-1 overflow-y-auto px-3" aria-label="Main">

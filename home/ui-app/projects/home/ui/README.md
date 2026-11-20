@@ -19,6 +19,7 @@ shared UI components for the "home" family of apps.
 - [Services](#services)
 - [Validators](#validators)
 - [Models & tokens](#models--tokens)
+- [Households (`@home/ui/household`)](#households-homeuihousehold)
 - [Theme CSS](#theme-css)
 - [Development](#development)
 
@@ -458,7 +459,86 @@ type Season = 'fall' | 'winter' | 'spring' | 'summer';
 interface Toast { id: number; message: string; type: 'success' | 'error'; }
 
 const HOME_THEME_TOKEN: InjectionToken<ThemeConfig>; // inject to read the config
+// A component the shell renders in its account area (sidenav and mobile header).
+// provideHousehold() sets it to the household badge.
+const SHELL_ACCOUNT_COMPONENT: InjectionToken<Type<unknown>>;
 ```
+
+---
+
+## Households (`@home/ui/household`)
+
+A separate entry point, so apps that only want the theme don't load it. Households live in
+household-api (`/household-api/`); each app's backend checks membership with
+`home-household-spring`, which reads the `X-Household-Id` header this sends.
+
+### Setup
+
+```ts
+// app.config.ts
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { householdInterceptor, provideHousehold, sessionInterceptor } from '@home/ui/household';
+
+providers: [
+  provideHttpClient(withFetch(), withInterceptors([sessionInterceptor, householdInterceptor])),
+  provideHousehold({ appId: 'budget' }), // also puts the household badge in the shell
+  provideHomeTheme({ ... }),
+]
+```
+
+```ts
+// app.ts
+@Component({
+  selector: 'app-root',
+  imports: [HouseholdGateComponent, ShellComponent],
+  template: `
+    <app-household-gate>
+      <ng-template><app-shell /></ng-template>
+    </app-household-gate>
+  `,
+})
+export class App {}
+```
+
+The `<ng-template>` matters: the gate creates the app only once a household is chosen, so no
+request leaves without `X-Household-Id`. Start loading app data from components inside it, not
+from `App`'s constructor.
+
+| `provideHousehold` option | Default | |
+| --- | --- | --- |
+| `appId` | required | Keys the saved choice (`home.household.<appId>` in localStorage). Every app shares one origin, so each needs its own. |
+| `apiUrl` | `/household-api/api/v1` | household-api's base URL |
+| `homeUrl` | `/` | The Home app, which hosts `household/welcome` and `household` |
+
+### What the gate does
+
+| `HouseholdContext.status()` | Shown |
+| --- | --- |
+| `loading` | A spinner while `GET /me` loads |
+| `ready` | The app. One household is picked automatically; otherwise the saved choice for this app |
+| `choose` | `HouseholdPickerComponent`: households by name and address, role, waiting invitations |
+| `none` | Redirects to Home's `household/welcome?returnUrl=…` to accept an invitation or create a household |
+| `error` | A retry button |
+
+It also shows the "You've been signed out" banner when `sessionInterceptor` sees an expired
+Cloudflare Access session.
+
+Switching households (the badge's **Switch** button) reloads the page so no data from the
+previous household stays on screen. If the app's API answers `403 NOT_A_MEMBER` or
+`428 HOUSEHOLD_REQUIRED`, `householdInterceptor` forgets the saved choice and the gate asks again.
+The header is only sent to same-origin URLs other than household-api's.
+
+### Exports
+
+| Export | |
+| --- | --- |
+| `provideHousehold(config)` | Config and the shell badge |
+| `householdInterceptor`, `sessionInterceptor` | Register with `withInterceptors` |
+| `HouseholdGateComponent` | `<app-household-gate>` |
+| `HouseholdPickerComponent`, `HouseholdBadgeComponent` | Used by the gate and the shell; usable on their own |
+| `HouseholdContext` | `status`, `me`, `households`, `invites`, `current`, `currentId`, `select(id)`, `chooseAgain()`, `forget()`, `welcomeUrl()`, `manageUrl()` |
+| `SessionService`, `apiErrorMessage(err)` | Signed-out state; a message for a failed call |
+| `Me`, `HouseholdSummary`, `HouseholdInvite`, `Address`, `formatAddress(address)` | `/me`'s shapes |
 
 ---
 

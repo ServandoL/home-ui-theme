@@ -71,7 +71,7 @@
     "@home/ui": {
       "projectType": "library",
       "root": "projects/home/ui",
-      "sourceRoot": "projects/home/ui/src",
+      "sourceRoot": "projects/home/ui",
       "prefix": "lib",
       "architect": {
         "build": {
