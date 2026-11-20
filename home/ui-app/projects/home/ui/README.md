@@ -526,7 +526,8 @@ Cloudflare Access session.
 Switching households (the badge's **Switch** button) reloads the page so no data from the
 previous household stays on screen. If the app's API answers `403 NOT_A_MEMBER` or
 `428 HOUSEHOLD_REQUIRED`, `householdInterceptor` forgets the saved choice and the gate asks again.
-The header is only sent to same-origin URLs other than household-api's.
+The header is only sent to URLs on the page's own origin, relative or absolute (so
+`new URL(path, location.origin)` works too), other than household-api's.
 
 ### Exports
 

@@ -46,6 +46,16 @@ describe('householdInterceptor', () => {
     expect(http.expectOne('api/v1/relative').request.headers.get('X-Household-Id')).toBe('a');
   });
 
+  it('treats an absolute URL on the page’s own origin as the app’s API', () => {
+    const url = `${location.origin}/recipe-book-api/api/v1/recipes?title=Tacos`;
+    void firstValueFrom(client.get(url));
+    expect(http.expectOne(url).request.headers.get('X-Household-Id')).toBe('a');
+
+    const household = `${location.origin}${API}/me`;
+    void firstValueFrom(client.get(household));
+    expect(http.expectOne(household).request.headers.has('X-Household-Id')).toBe(false);
+  });
+
   it('never sends it to household-api or another site', () => {
     void firstValueFrom(client.get(`${API}/households/a`));
     expect(http.expectOne(`${API}/households/a`).request.headers.has('X-Household-Id')).toBe(false);

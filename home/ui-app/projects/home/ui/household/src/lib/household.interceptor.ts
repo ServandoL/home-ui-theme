@@ -6,13 +6,14 @@ import { HOUSEHOLD_CONFIG, HOUSEHOLD_HEADER } from './household.config';
 import { ApiErrorBody } from './session';
 
 /**
- * Adds `X-Household-Id` to calls to the app's own API: same-origin URLs other than
- * household-api's. When the API answers that the household is missing or not the person's,
- * forgets the saved choice so the gate shows the picker again.
+ * Adds `X-Household-Id` to calls to the app's own API: URLs on the page's origin, relative or
+ * absolute, other than household-api's. When the API answers that the household is missing or
+ * not the person's, forgets the saved choice so the gate shows the picker again.
  */
 export const householdInterceptor: HttpInterceptorFn = (req, next) => {
   const config = inject(HOUSEHOLD_CONFIG);
-  if (!isSameOrigin(req.url) || req.url.startsWith(config.apiUrl)) return next(req);
+  const url = resolve(req.url);
+  if (!url || url.origin !== location.origin || url.pathname.startsWith(config.apiUrl)) return next(req);
 
   const context = inject(HouseholdContext);
   const id = context.currentId();
@@ -25,9 +26,17 @@ export const householdInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-/** Relative URLs only: the household id never goes to another site. */
-function isSameOrigin(url: string): boolean {
-  return !/^[a-z][a-z\d+.-]*:/i.test(url) && !url.startsWith('//');
+/**
+ * The request URL resolved against the page, or null if it can't be parsed. Apps build URLs both
+ * ways (`/budget-api/...` and `new URL(path, location.origin)`); comparing origins treats them
+ * alike, and the household id still never goes to another site.
+ */
+function resolve(url: string): URL | null {
+  try {
+    return new URL(url, location.href);
+  } catch {
+    return null;
+  }
 }
 
 /** home-household-spring's two answers; other 403s (e.g. an admin-only action) are the app's own. */
