@@ -22,8 +22,10 @@ import {
   phosphorTrayArrowUpDuotone,
 } from '@ng-icons/phosphor-icons/duotone';
 import {
+  heroCog6ToothSolid,
   heroMoonSolid,
   heroQuestionMarkCircleSolid,
+  heroSparklesSolid,
   heroSunSolid,
 } from '@ng-icons/heroicons/solid';
 import { SeasonIconService } from '../services/season-icon.service';
@@ -49,6 +51,8 @@ export function provideHomeTheme(config: ThemeConfig) {
       heroSunSolid,
       heroMoonSolid,
       heroQuestionMarkCircleSolid,
+      heroSparklesSolid,
+      heroCog6ToothSolid,
       phosphorLeafDuotone,
       phosphorAcornDuotone,
       phosphorFlowerLotusDuotone,

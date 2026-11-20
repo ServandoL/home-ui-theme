@@ -141,10 +141,13 @@ It renders:
 
 | Part | Description |
 | ---- | ----------- |
-| Mobile header | Sticky header (hidden at `lg`+) with `config.appName` and a light / dark / party theme toggle. |
+| Mobile header | Sticky header (hidden at `lg`+) with `config.appName` and the account slot. |
 | `<router-outlet>` | Your routed content, inside a scrollable `<main>` with bottom padding to clear the tab bar. |
 | `<app-mobile-bottom-nav>` | Fixed bottom tab bar (hidden at `lg`+). |
 | `<app-toast-container>` | Global toast stack driven by `ToastService`. |
+
+The shell has no theme switch; it's on each app's settings page (see
+[Settings and theme](#settings-and-theme)).
 
 ### Navigation behaviour
 
@@ -187,6 +190,30 @@ All components are standalone. Import them directly into your component's
 ### `ShellComponent` — `<app-shell>`
 
 See [App shell](#app-shell).
+
+### Settings and theme
+
+The light / dark / party switch lives on a settings page, not in the shell.
+
+- An app **without** a settings page uses the library's: add `SETTINGS_ROUTE`
+  to the routes under the shell and `SETTINGS_NAV_ROUTE` to `provideHomeTheme`'s
+  `routes`. The page is `SettingsPageComponent` (`<app-settings-page>`): a
+  "Settings" heading and the Appearance section.
+
+  ```ts
+  // app.routes.ts
+  import { SETTINGS_ROUTE } from '@home/ui';
+  { path: '', component: ShellComponent, children: [/* … */, SETTINGS_ROUTE] }
+
+  // app.config.ts
+  provideHomeTheme({ appName: 'Recipe book', routes: [/* … */, SETTINGS_NAV_ROUTE] })
+  ```
+
+- An app **with** its own settings page adds `ThemeSettingsComponent`
+  (`<app-theme-settings>`), the Appearance section as a card.
+
+`ThemeToggleComponent` (`<app-theme-toggle>`) is the switch itself; `[labels]="true"`
+shows each mode's name beside its icon. Each button sets `aria-pressed`.
 
 ### `MobileBottomNavComponent` — `<app-mobile-bottom-nav>`
 

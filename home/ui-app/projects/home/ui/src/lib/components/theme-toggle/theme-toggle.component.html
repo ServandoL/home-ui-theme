@@ -1,25 +1,28 @@
-<div class="flex gap-1.5 rounded-2xl p-1 app-theme-group">
+<div class="flex gap-1.5 rounded-2xl p-1 app-theme-group" role="group" aria-label="Theme">
   @for (mode of themeService.themeModes; track mode.value) {
     <button
       type="button"
       (click)="setMode(mode.value)"
       [class]="
-        themeService.isActive(mode.value)
-          ? 'app-theme-option-active rounded-xl px-3 py-2 text-xs font-semibold min-h-[44px]'
-          : 'app-theme-option rounded-xl px-3 py-2 text-xs font-semibold min-h-[44px]'
+        (themeService.isActive(mode.value) ? 'app-theme-option-active' : 'app-theme-option') +
+        ' inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold min-h-[44px]'
       "
-      [attr.aria-label]="'Switch to ' + mode.label + ' mode'"
+      [attr.aria-pressed]="themeService.isActive(mode.value)"
+      [attr.aria-label]="labels() ? null : 'Switch to ' + mode.label + ' mode'"
     >
       @switch (mode.icon) {
         @case ('light') {
-          <ng-icon name="heroSunSolid"/>
+          <ng-icon name="heroSunSolid" aria-hidden="true"/>
         }
         @case ('dark') {
-          <ng-icon name="heroMoonSolid"/>
+          <ng-icon name="heroMoonSolid" aria-hidden="true"/>
         }
         @default {
-          <ng-icon name="heroQuestionMarkCircleSolid"/>
+          <ng-icon name="heroSparklesSolid" aria-hidden="true"/>
         }
+      }
+      @if (labels()) {
+        {{ mode.label }}
       }
     </button>
   }

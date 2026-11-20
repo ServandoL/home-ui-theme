@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { ThemeMode, ThemeService } from '../../services/theme.service';
 
@@ -9,6 +9,9 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
 })
 export class ThemeToggleComponent {
   protected readonly themeService = inject(ThemeService);
+
+  /** Show each mode's name beside its icon, where there's room (the settings page). */
+  readonly labels = input(false);
 
   setMode(mode: ThemeMode): void {
     this.themeService.setMode(mode);

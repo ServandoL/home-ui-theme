@@ -4,11 +4,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { NavigationService } from '../../services/navigation.service';
 import { HOME_THEME_TOKEN } from '../../providers/provider';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive, NgIcon, ThemeToggleComponent, NgComponentOutlet],
+  imports: [RouterLink, RouterLinkActive, NgIcon, NgComponentOutlet],
   selector: 'app-desktop-sidenav',
   templateUrl: './desktop-sidenav.component.html',
 })

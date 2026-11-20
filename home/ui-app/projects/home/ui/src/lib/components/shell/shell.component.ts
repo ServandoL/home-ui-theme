@@ -4,7 +4,6 @@ import { RouterOutlet } from '@angular/router';
 import { MobileBottomNavComponent } from '../mobile-bottom-nav/mobile-bottom-nav.component';
 import { ToastContainerComponent } from '../toast-container/toast-container.component';
 import { DesktopSidenavComponent } from '../desktop-sidenav/desktop-sidenav.component';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { HOME_THEME_TOKEN } from '../../providers/provider';
 import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
 
@@ -16,7 +15,6 @@ import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
     ToastContainerComponent,
     MobileBottomNavComponent,
     DesktopSidenavComponent,
-    ThemeToggleComponent,
     NgComponentOutlet,
   ],
   templateUrl: './shell.component.html',
