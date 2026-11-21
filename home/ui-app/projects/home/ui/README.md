@@ -467,6 +467,29 @@ The shell's layout for the current route. See [Shell layout](#shell-layout).
 | `headerCollapsed` / `navCollapsed` / `sidenavCollapsed` | Computed: which parts are collapsed. Always `false` when not `collapsible`. |
 | `toggleHeader()` / `toggleNav()` / `toggleSidenav()` | Collapse or expand a part. |
 
+### `StaleBuildRecovery`
+
+Reloads the page when a navigation fails because its lazy chunk is gone. `provideHomeTheme()`
+starts it, so apps get it without any code.
+
+A deploy deletes the previous build's files, so a tab opened before it still runs the old code and
+asks for chunks that no longer exist. Without this, the router drops the navigation silently and
+tapping a nav tab does nothing. With it, the browser does a full load of the page the person was
+going to (keeping the base href, e.g. `/budget/bills`), which fetches the current build.
+
+If the same page fails again within a minute of reloading, the build itself is broken: it logs the
+error and doesn't reload, so it can't loop. Errors from the app's own code never trigger a reload.
+
+| Member | Description |
+| ------ | ----------- |
+| `start()` | Watch the router's `NavigationError`s. Safe to call more than once. |
+| `recover(event)` | Reload for one `NavigationError` if its chunk failed to load. Returns whether it reloaded. |
+| `isStaleBuildError(error)` | Exported function: true for Chrome's, Firefox's and Safari's chunk-load errors. |
+
+This works with nginx answering a missing chunk with a `404` rather than `index.html`
+(`home-server/home/nginx/default.conf`), and `index.html` sent as `no-cache` so the reload gets the
+current one.
+
 ### `SeasonIconService`
 
 | Member | Description |

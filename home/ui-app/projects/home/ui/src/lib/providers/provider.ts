@@ -33,6 +33,7 @@ import {
   heroSunSolid,
 } from '@ng-icons/heroicons/solid';
 import { SeasonIconService } from '../services/season-icon.service';
+import { StaleBuildRecovery } from '../services/stale-build-recovery.service';
 import { NavExpandType } from '../models/bottom-nav';
 
 export interface ThemeConfig {
@@ -55,6 +56,8 @@ export function provideHomeTheme(config: ThemeConfig) {
       const navService = inject(NavigationService);
       navService.setRoutes(config.routes);
       navService.setNavExpandType(config.navExpandType ?? 'bottom-drawer');
+      // A tab left open across a deploy reloads instead of silently ignoring navigation.
+      inject(StaleBuildRecovery).start();
     }),
     provideIcons({
       heroSunSolid,

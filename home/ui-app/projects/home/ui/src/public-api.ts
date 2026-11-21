@@ -28,3 +28,4 @@ export * from './lib/providers/provider';
 export * from './lib/providers/shell-account';
 export * from './lib/services/season-icon.service';
 export * from './lib/services/shell-layout.service';
+export * from './lib/services/stale-build-recovery.service';
