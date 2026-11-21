@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { provideHomeTheme } from '../../providers/provider';
 import { ShellLayoutService } from '../../services/shell-layout.service';
 import { SettingsPageComponent } from '../settings-page/settings-page.component';
+import { ShellLayoutSwitchComponent } from './shell-layout-switch.component';
 import { ShellSettingsComponent } from './shell-settings.component';
 
 @Component({ template: '' })
@@ -60,6 +61,17 @@ describe('ShellSettingsComponent', () => {
     toggle.click();
     await fixture.whenStable();
     expect(layout.collapsible()).toBe(false);
+  });
+
+  it('comes bare, without the card or heading, for pages with their own sections', async () => {
+    setup(true);
+    const fixture = TestBed.createComponent(ShellLayoutSwitchComponent);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.querySelector('h2')).toBeNull();
+    expect(el.querySelector('.app-card')).toBeNull();
+    expect(el.querySelector('[role="switch"]')!.getAttribute('aria-checked')).toBe('true');
   });
 
   it('is on the library’s settings page, under Appearance', async () => {

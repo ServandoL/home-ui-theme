@@ -18,6 +18,7 @@ export * from './lib/components/desktop-sidenav/desktop-sidenav.component';
 export * from './lib/components/theme-toggle/theme-toggle.component';
 export * from './lib/components/theme-settings/theme-settings.component';
 export * from './lib/components/shell-settings/shell-settings.component';
+export * from './lib/components/shell-settings/shell-layout-switch.component';
 export * from './lib/components/settings-page/settings-page.component';
 export * from './lib/components/season-background/season-background.component';
 export * from './lib/validators/dateYMDValidator';

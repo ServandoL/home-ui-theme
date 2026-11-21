@@ -252,6 +252,15 @@ The light / dark / party switch lives on a settings page, not in the shell.
   `ShellSettingsComponent` (`<app-shell-settings>`), the Layout section: a switch
   for the shell's collapse controls (see [Shell layout](#shell-layout)).
   `SettingsPageComponent` shows both.
+- A settings page with its own section style uses the bare controls under its
+  own headings instead of the cards: `ThemeToggleComponent` and
+  `ShellLayoutSwitchComponent` (`<app-shell-layout-switch>`), the switch with its
+  label and description.
+
+  ```html
+  <h2 class="text-lg font-semibold app-text">Layout</h2>
+  <app-shell-layout-switch />
+  ```
 
 `ThemeToggleComponent` (`<app-theme-toggle>`) is the switch itself; `[labels]="true"`
 shows each mode's name beside its icon. Each button sets `aria-pressed`.
