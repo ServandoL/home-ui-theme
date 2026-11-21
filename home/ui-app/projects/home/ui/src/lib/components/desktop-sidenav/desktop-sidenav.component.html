@@ -1,27 +1,79 @@
-<aside class="hidden lg:flex fixed inset-y-0 left-0 z-30 w-64 flex-col app-surface border-r app-border">
-  <div class="flex flex-col gap-3 px-5 pt-6 pb-4">
-    <p class="text-base font-semibold app-text">{{ config.appName }}</p>
-    @if (account) {
-      <ng-container *ngComponentOutlet="account" />
-    }
-  </div>
+<aside
+  id="desktop-sidenav"
+  class="hidden lg:flex fixed inset-y-0 left-0 z-30 flex-col app-surface border-r app-border"
+  [class]="layout.sidenavCollapsed() ? 'w-16' : 'w-64'"
+>
+  @if (layout.sidenavCollapsed()) {
+    <div class="px-3 pt-6 pb-4">
+      <p class="text-base font-semibold app-text text-center" [title]="config.appName">
+        <span aria-hidden="true">{{ config.appName.charAt(0) }}</span>
+        <span class="sr-only">{{ config.appName }}</span>
+      </p>
+    </div>
+  } @else {
+    <div class="flex flex-col gap-3 px-5 pt-6 pb-4">
+      <p class="text-base font-semibold app-text">{{ config.appName }}</p>
+      @if (account) {
+        <ng-container *ngComponentOutlet="account" />
+      }
+    </div>
+  }
 
   <nav class="flex-1 overflow-y-auto px-3" aria-label="Main">
     <ul class="flex flex-col gap-1">
       @for (route of navService.routes(); track route.name) {
         <li>
-          <a
-            [routerLink]="route.url"
-            routerLinkActive="app-nav-link-active"
-            class="app-nav-link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors"
-          >
-            @if (route.icon?.name) {
-              <ng-icon [name]="route.icon?.name"/>
-            }
-            {{ route.name }}
-          </a>
+          @if (layout.sidenavCollapsed()) {
+            <a
+              [routerLink]="route.url"
+              routerLinkActive="app-nav-link-active"
+              [title]="route.name"
+              class="app-nav-link flex items-center justify-center rounded-xl py-2.5 text-sm font-medium transition-colors"
+            >
+              @if (route.icon?.name) {
+                <ng-icon [name]="route.icon?.name" aria-hidden="true"/>
+              } @else {
+                <span aria-hidden="true">{{ route.name.charAt(0) }}</span>
+              }
+              <span class="sr-only">{{ route.name }}</span>
+            </a>
+          } @else {
+            <a
+              [routerLink]="route.url"
+              routerLinkActive="app-nav-link-active"
+              class="app-nav-link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors"
+            >
+              @if (route.icon?.name) {
+                <ng-icon [name]="route.icon?.name"/>
+              }
+              {{ route.name }}
+            </a>
+          }
         </li>
       }
     </ul>
   </nav>
+
+  @if (layout.collapsible()) {
+    <div class="px-3 py-3 border-t app-border">
+      <button
+        type="button"
+        class="app-nav-link flex w-full items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-colors"
+        [class]="layout.sidenavCollapsed() ? 'justify-center' : 'px-3'"
+        aria-controls="desktop-sidenav"
+        [attr.aria-expanded]="!layout.sidenavCollapsed()"
+        [attr.aria-label]="layout.sidenavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+        [title]="layout.sidenavCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+        (click)="layout.toggleSidenav()"
+      >
+        <ng-icon
+          aria-hidden="true"
+          [name]="layout.sidenavCollapsed() ? 'heroChevronDoubleRightSolid' : 'heroChevronDoubleLeftSolid'"
+        />
+        @if (!layout.sidenavCollapsed()) {
+          <span aria-hidden="true">Collapse</span>
+        }
+      </button>
+    </div>
+  }
 </aside>

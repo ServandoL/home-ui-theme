@@ -5,6 +5,7 @@ import { NgIcon } from '@ng-icons/core';
 import { NavigationService } from '../../services/navigation.service';
 import { HOME_THEME_TOKEN } from '../../providers/provider';
 import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
+import { ShellLayoutService } from '../../services/shell-layout.service';
 
 @Component({
   imports: [RouterLink, RouterLinkActive, NgIcon, NgComponentOutlet],
@@ -15,4 +16,5 @@ export class DesktopSidenavComponent {
   protected readonly navService = inject(NavigationService);
   protected readonly config = inject(HOME_THEME_TOKEN);
   protected readonly account = inject(SHELL_ACCOUNT_COMPONENT, { optional: true });
+  protected readonly layout = inject(ShellLayoutService);
 }
