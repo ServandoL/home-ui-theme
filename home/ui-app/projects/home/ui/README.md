@@ -312,10 +312,11 @@ Inline "Delete? Yes / No" confirmation row.
 | `(confirmed)` | `void` | — |
 | `(cancelled)` | `void` | — |
 
+Lays itself out as a flex row (`flex flex-1 items-center gap-2`): the message
+fills the space and the buttons sit at the end. No wrapper needed.
+
 ```html
-<div class="flex items-center gap-2">
-  <app-confirm-delete-actions (confirmed)="remove(item)" (cancelled)="deleting.set(null)" />
-</div>
+<app-confirm-delete-actions (confirmed)="remove(item)" (cancelled)="deleting.set(null)" />
 ```
 
 ### `MobileRecordCardComponent` — `<app-mobile-record-card>`
