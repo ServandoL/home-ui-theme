@@ -10,7 +10,7 @@
         <span class="sr-only">{{ config.appName }}</span>
       </p>
       @if (compactAccount) {
-        <div class="mt-3 flex justify-center">
+        <div class="mt-3 flex justify-center border-t app-border pt-3">
           <ng-container *ngComponentOutlet="compactAccount; inputs: { variant: 'rail' }" />
         </div>
       }
