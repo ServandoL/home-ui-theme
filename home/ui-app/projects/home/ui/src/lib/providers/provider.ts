@@ -35,6 +35,7 @@ import {
 import { SeasonIconService } from '../services/season-icon.service';
 import { StaleBuildRecovery } from '../services/stale-build-recovery.service';
 import { NavExpandType } from '../models/bottom-nav';
+import { HelpContent } from '../models/help.model';
 
 export interface ThemeConfig {
   appName: string;
@@ -45,6 +46,8 @@ export interface ThemeConfig {
    * collapsed. Default true; people can change it in Settings. See ShellLayoutService.
    */
   collapsibleShell?: boolean;
+  /** What the Help page (HELP_ROUTE) says about this app. */
+  help?: HelpContent;
 }
 
 export const HOME_THEME_TOKEN = new InjectionToken<ThemeConfig>('app.config');

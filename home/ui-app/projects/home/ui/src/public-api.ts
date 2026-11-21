@@ -20,6 +20,8 @@ export * from './lib/components/theme-settings/theme-settings.component';
 export * from './lib/components/shell-settings/shell-settings.component';
 export * from './lib/components/shell-settings/shell-layout-switch.component';
 export * from './lib/components/settings-page/settings-page.component';
+export * from './lib/components/help-page/help-page.component';
+export * from './lib/models/help.model';
 export * from './lib/components/season-background/season-background.component';
 export * from './lib/validators/dateYMDValidator';
 export * from './lib/models/routes.model';

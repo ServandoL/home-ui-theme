@@ -268,6 +268,34 @@ The light / dark / party switch lives on a settings page, not in the shell.
 `ThemeToggleComponent` (`<app-theme-toggle>`) is the switch itself; `[labels]="true"`
 shows each mode's name beside its icon. Each button sets `aria-pressed`.
 
+### Help page
+
+`HelpPageComponent` (`<app-help-page>`) tells people how to use the app. Add `HELP_ROUTE` under the
+shell and `HELP_NAV_ROUTE` to the nav routes, and pass the app's content as `help` to
+`provideHomeTheme`. The page lays it out the same in every app: the summary, a card per topic
+(with an optional link to a page in the app), the questions folded, and an About section on how
+the Home apps share sign-in and households. Without `help` it says the app has no help yet.
+
+```ts
+// app.routes.ts
+{ path: '', component: ShellComponent, children: [/* … */, HELP_ROUTE, SETTINGS_ROUTE] }
+
+// app.config.ts
+provideHomeTheme({
+  appName: 'Home Recipes',
+  routes: [/* … */, HELP_NAV_ROUTE, SETTINGS_NAV_ROUTE],
+  help: {
+    summary: 'Keep your household’s recipes in one place.',
+    topics: [{ title: 'Add a recipe', text: 'Tap Create…', link: { label: 'Create a recipe', url: '/create' } }],
+    questions: [{ question: 'Who can see my recipes?', answer: 'Everyone in your household.' }],
+  },
+})
+```
+
+`HelpContent` is plain text (`summary`, `topics: HelpTopic[]`, `questions?: HelpQuestion[]`).
+Put Help with Settings at the end of `routes`, so it lands in the More menu rather than taking a tab.
+`provideHomeTheme` registers its icon, `heroQuestionMarkCircleSolid`.
+
 ### `MobileBottomNavComponent` — `<app-mobile-bottom-nav>`
 
 Fixed bottom tab bar driven by `NavigationService`. Already included in the
