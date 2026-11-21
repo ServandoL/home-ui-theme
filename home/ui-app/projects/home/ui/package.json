@@ -1,6 +1,6 @@
 {
   "name": "@home/ui",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "peerDependencies": {
     "@angular/cdk": "^22.1.7",
     "@angular/common": "^22.1.0",

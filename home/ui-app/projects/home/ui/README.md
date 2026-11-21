@@ -177,9 +177,41 @@ nav.setRoutes([...]);              // replace routes at runtime
 nav.setNavExpandType('sidenav');   // switch overflow style at runtime
 ```
 
-> The shell is currently mobile-first: the header and bottom nav are hidden
-> at the `lg` breakpoint and the content area reserves `lg:pl-64` for a
-> desktop sidebar, which the consuming app must provide.
+At the `lg` breakpoint the mobile header and bottom nav hide and
+`DesktopSidenavComponent` shows every route in a 256px sidebar.
+
+### Shell layout
+
+Two keys in a route's `data` change the shell for that route. A parent route's
+data applies to its children.
+
+```ts
+import { ShellRouteData } from '@home/ui';
+
+{
+  path: 'patterns/:id',
+  loadComponent: () => import('./editor').then((m) => m.Editor),
+  data: { shellLayout: 'fill', shellCollapsed: true } satisfies ShellRouteData,
+}
+```
+
+| Key | Effect |
+| --- | ------ |
+| `shellLayout: 'fill'` | `<main>` becomes a flex column that doesn't scroll, so the page can fill the space and scroll itself (an editor with its own sticky headers). Give the page's host `flex-1 min-h-0`. It only pads for the bottom nav while the nav shows. Default `'scroll'`. |
+| `shellCollapsed: true` | The mobile header, bottom nav and desktop sidebar start collapsed. Expanding one lasts until the person leaves the route; then their saved choice comes back. |
+
+To let people collapse the shell on every route, pass `collapsibleShell: true`
+to `provideHomeTheme()`. Then:
+
+- the mobile header hides the household badge behind a chevron,
+- the bottom nav gets a **Hide** tab and comes back from a floating button at
+  the bottom right,
+- the desktop sidebar collapses to a 64px rail of icons (routes without an
+  icon show their first letter).
+
+Choices are saved per app on the device (`home.shell.<app-name>` in
+localStorage). Without `collapsibleShell` or `shellCollapsed` the shell shows no
+collapse controls and looks as it did before 2.7.0.
 
 ---
 
@@ -401,6 +433,17 @@ Holds routes and menu state for the shell. See
 | `openMenu()` / `closeMenu()` / `toggleMenu()` / `toggleSidenav()` | Control the overflow menu. |
 | `setRoutes(routes)` / `setNavExpandType(type)` | Reconfigure at runtime. |
 
+### `ShellLayoutService`
+
+The shell's layout for the current route. See [Shell layout](#shell-layout).
+
+| Member | Description |
+| ------ | ----------- |
+| `fill` | Computed: the route set `shellLayout: 'fill'`. |
+| `collapsible` | Computed: `collapsibleShell` is on or the route set `shellCollapsed`. |
+| `headerCollapsed` / `navCollapsed` / `sidenavCollapsed` | Computed: which parts are collapsed. Always `false` when not `collapsible`. |
+| `toggleHeader()` / `toggleNav()` / `toggleSidenav()` | Collapse or expand a part. |
+
 ### `SeasonIconService`
 
 | Member | Description |
@@ -473,6 +516,12 @@ interface ThemeConfig {
   appName: string;
   routes: NavigationRoutes[];
   navExpandType?: NavExpandType; // default 'bottom-drawer'
+  collapsibleShell?: boolean; // default false
+}
+
+interface ShellRouteData {
+  shellLayout?: 'scroll' | 'fill'; // default 'scroll'
+  shellCollapsed?: boolean;
 }
 
 interface NavigationRoutes {
