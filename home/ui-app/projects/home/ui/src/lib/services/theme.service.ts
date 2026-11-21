@@ -176,20 +176,20 @@ export class ThemeService {
     const warningHue = (accentHue + randomInt(145, 210)) % 360;
     const successHue = (accentHue + randomInt(220, 320)) % 360;
 
-    const accent = hslToHex(accentHue, 88, 63);
+    const accent = hslToHex(accentHue, 100, 62);
 
     return {
       accent,
-      accentHover: hslToHex(accentHue, 88, 57),
-      accentPressed: hslToHex(accentHue, 84, 50),
-      accentSoft: hslToHex(accentHue, 58, 20),
-      accentSoftStrong: hslToHex(accentHue, 66, 27),
+      accentHover: hslToHex(accentHue, 100, 56),
+      accentPressed: hslToHex(accentHue, 96, 49),
+      accentSoft: hslToHex(accentHue, 70, 20),
+      accentSoftStrong: hslToHex(accentHue, 78, 28),
       onAccent: pickReadableForeground(accent),
-      info: hslToHex(infoHue, 80, 70),
+      info: hslToHex(infoHue, 100, 66),
       infoSoft: hslToHex(infoHue, 56, 18),
-      warning: hslToHex(warningHue, 90, 72),
+      warning: hslToHex(warningHue, 100, 64),
       warningSoft: hslToHex(warningHue, 56, 18),
-      success: hslToHex(successHue, 76, 68),
+      success: hslToHex(successHue, 100, 62),
       successSoft: hslToHex(successHue, 54, 18),
     };
   }

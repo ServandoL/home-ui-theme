@@ -402,3 +402,104 @@ button {
 .app-toast-dismiss:hover {
   background-color: color-mix(in srgb, white 16%, transparent);
 }
+
+/* Party: tint everything with the random palette and keep it moving. */
+html[data-theme='party'] {
+  --party-gradient: linear-gradient(
+    120deg,
+    var(--theme-accent),
+    var(--theme-info),
+    var(--theme-warning),
+    var(--theme-success),
+    var(--theme-accent)
+  );
+  --theme-surface: color-mix(in srgb, var(--theme-accent) 9%, #13131d);
+  --theme-surface-muted: color-mix(in srgb, var(--theme-info) 12%, #1d1d2d);
+  --theme-surface-strong: color-mix(in srgb, var(--theme-accent) 16%, #28283a);
+  --theme-border: color-mix(in srgb, var(--theme-accent) 45%, #3b3b59);
+  --theme-border-subtle: color-mix(in srgb, var(--theme-info) 30%, #2a2a41);
+}
+
+html[data-theme='party'] .app-shell-bg {
+  isolation: isolate;
+}
+
+/* On a pseudo-element so the hue spin doesn't recolor content or trap fixed children. */
+html[data-theme='party'] .app-shell-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--theme-accent) 42%, transparent), transparent 38%),
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--theme-info) 38%, transparent), transparent 36%),
+    radial-gradient(circle at 80% 88%, color-mix(in srgb, var(--theme-warning) 34%, transparent), transparent 40%),
+    radial-gradient(circle at 18% 85%, color-mix(in srgb, var(--theme-success) 34%, transparent), transparent 40%);
+  background-size: 180% 180%;
+  animation: party-drift 14s ease-in-out infinite alternate, party-hue 24s linear infinite;
+}
+
+/* Let the glow show through the shell's sidebar, mobile header and bottom nav as frosted glass. */
+html[data-theme='party'] .app-shell-bg > app-desktop-sidenav > aside,
+html[data-theme='party'] .app-shell-bg main > header,
+html[data-theme='party'] .app-shell-bg > app-mobile-bottom-nav > nav {
+  background-color: color-mix(in srgb, var(--theme-surface) 45%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+}
+
+html[data-theme='party'] .app-card {
+  border-color: color-mix(in srgb, var(--theme-accent) 55%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--theme-info) 25%, transparent),
+    0 0 24px -6px color-mix(in srgb, var(--theme-accent) 60%, transparent);
+}
+
+html[data-theme='party'] .app-button-primary,
+html[data-theme='party'] .app-highlight,
+html[data-theme='party'] .app-theme-option-active {
+  background-image: var(--party-gradient);
+  background-size: 300% 100%;
+  animation: party-shimmer 4s linear infinite;
+  box-shadow: 0 0 18px -4px color-mix(in srgb, var(--theme-accent) 75%, transparent);
+}
+
+html[data-theme='party'] .app-button-primary:hover {
+  filter: brightness(1.12) saturate(1.2);
+}
+
+html[data-theme='party'] .app-nav-link-active,
+html[data-theme='party'] .app-text-accent {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--theme-accent) 70%, transparent);
+}
+
+@keyframes party-drift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes party-hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes party-shimmer {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme='party'] .app-shell-bg::before,
+  html[data-theme='party'] .app-button-primary,
+  html[data-theme='party'] .app-highlight,
+  html[data-theme='party'] .app-theme-option-active {
+    animation: none;
+  }
+}
