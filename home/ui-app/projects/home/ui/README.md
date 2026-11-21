@@ -38,9 +38,9 @@ npm install @angular/cdk @ng-icons/core @ng-icons/heroicons @ng-icons/phosphor-i
 | -------------------------- | --------- |
 | `@angular/core` / `common` / `forms` | `^22.1.0` |
 | `@angular/cdk`             | `^22.1.7` |
-| `@ng-icons/core`           | `^35.0.1` |
-| `@ng-icons/heroicons`      | `^35.0.1` |
-| `@ng-icons/phosphor-icons` | `^36.0.0` |
+| `@ng-icons/core`           | `^36.1.0` |
+| `@ng-icons/heroicons`      | `^36.1.0` |
+| `@ng-icons/phosphor-icons` | `^36.1.0` |
 
 `@angular/router` is also required (the shell and nav components use
 `RouterOutlet` / `RouterLink`), as is Tailwind CSS 4 in the consuming app.
