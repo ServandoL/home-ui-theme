@@ -670,9 +670,14 @@ Use the classes for color, and Tailwind for layout and spacing.
 `--theme-accent`, `--theme-accent-hover`, `--theme-accent-pressed`,
 `--theme-accent-soft`, `--theme-accent-soft-strong`, `--theme-on-accent`,
 `--theme-danger`, `--theme-danger-hover`, `--theme-danger-soft`,
-`--theme-warning`, `--theme-warning-soft`, `--theme-info`,
+`--theme-on-danger`, `--theme-warning`, `--theme-warning-soft`, `--theme-info`,
 `--theme-info-soft`, `--theme-success`, `--theme-success-soft`,
-`--theme-input-bg`, `--theme-overlay`, `--theme-select-chevron`.
+`--theme-on-success`, `--theme-input-bg`, `--theme-overlay`, `--theme-select-chevron`.
+
+Every text color reaches WCAG AA (4.5:1) on the backgrounds it's used with, in
+light, dark and every party palette: `--theme-on-*` on its fill, the soft tints
+under their color, and `--theme-text*` on the surfaces. Party colors are
+lightened (and yellow tints darkened) per hue until they do.
 
 **Utility classes:**
 

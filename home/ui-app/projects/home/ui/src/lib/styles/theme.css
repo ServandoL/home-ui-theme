@@ -9,25 +9,28 @@
   --theme-border-subtle: #e7edf5;
   --theme-text: #0f172a;
   --theme-text-muted: #475569;
-  --theme-text-subtle: #94a3b8;
+  --theme-text-subtle: #5f6f84;
   --theme-accent: #4f46e5;
   --theme-accent-hover: #4338ca;
   --theme-accent-pressed: #3730a3;
   --theme-accent-soft: #e0e7ff;
-  --theme-accent-soft-strong: #c7d2fe;
+  --theme-accent-soft-strong: #d3dbfe;
   --theme-on-accent: #ffffff;
-  --theme-danger: #dc2626;
-  --theme-danger-hover: #b91c1c;
+  --theme-danger: #b91c1c;
+  --theme-danger-hover: #991b1b;
   --theme-danger-soft: #fee2e2;
-  --theme-warning: #b45309;
+  --theme-warning: #9a3412;
   --theme-warning-soft: #ffedd5;
   --theme-info: #0369a1;
   --theme-info-soft: #e0f2fe;
-  --theme-success: #059669;
+  --theme-success: #047857;
   --theme-success-soft: #d1fae5;
   --theme-input-bg: #ffffff;
   --theme-overlay: rgba(15, 23, 42, 0.56);
   --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23475569' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  /* Text on solid danger and success fills (danger buttons, toasts). */
+  --theme-on-danger: #fff1f2;
+  --theme-on-success: #ecfdf5;
 }
 
 html[data-theme='dark'],
@@ -46,13 +49,13 @@ html[data-theme='dark'] {
   --theme-text-muted: #cbd5e1;
   --theme-text-subtle: #94a3b8;
   --theme-accent: #818cf8;
-  --theme-accent-hover: #6366f1;
-  --theme-accent-pressed: #4f46e5;
-  --theme-accent-soft: #312e81;
-  --theme-accent-soft-strong: #3730a3;
-  --theme-on-accent: #eef2ff;
+  --theme-accent-hover: #a5b4fc;
+  --theme-accent-pressed: #c7d2fe;
+  --theme-accent-soft: #211d52;
+  --theme-accent-soft-strong: #28245f;
+  --theme-on-accent: #0f172a;
   --theme-danger: #f87171;
-  --theme-danger-hover: #ef4444;
+  --theme-danger-hover: #fca5a5;
   --theme-danger-soft: #3b1015;
   --theme-warning: #fbbf24;
   --theme-warning-soft: #3f2408;
@@ -63,6 +66,9 @@ html[data-theme='dark'] {
   --theme-input-bg: #0b1220;
   --theme-overlay: rgba(2, 6, 23, 0.74);
   --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23cbd5e1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  /* The fills are light here, so their text is dark; hovers lighten instead of darken. */
+  --theme-on-danger: #1f0a0c;
+  --theme-on-success: #022c22;
 }
 
 html[data-theme='party'] {
@@ -81,6 +87,8 @@ html[data-theme='party'] {
   --theme-input-bg: #0f1020;
   --theme-overlay: rgba(9, 9, 15, 0.82);
   --theme-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ddd6fe' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  /* --theme-on-success follows the random palette (ThemeService). */
+  --theme-on-danger: #1f0a12;
 }
 
 html,
@@ -217,7 +225,7 @@ button {
 
 .app-button-danger {
   background-color: var(--theme-danger);
-  color: #fff1f2;
+  color: var(--theme-on-danger);
 }
 
 .app-button-danger:hover {
@@ -260,7 +268,7 @@ button {
 
 .app-success-toast {
   background-color: var(--theme-success);
-  color: #ecfdf5;
+  color: var(--theme-on-success);
 }
 
 .app-highlight-soft {

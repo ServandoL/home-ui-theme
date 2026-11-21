@@ -16,10 +16,15 @@ interface PartyPalette {
   warningSoft: string;
   success: string;
   successSoft: string;
+  onSuccess: string;
 }
 
 const THEME_MODE_STORAGE_KEY = 'ngx-shared-ui.theme-mode';
 const PARTY_PALETTE_STORAGE_KEY = 'ngx-shared-ui.party-palette';
+/** WCAG AA for body text. */
+const MIN_CONTRAST = 4.5;
+const DARK_FOREGROUND = '#0f172a';
+const LIGHT_FOREGROUND = '#f8fafc';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -128,7 +133,9 @@ export class ThemeService {
       parsed.warning &&
       parsed.warningSoft &&
       parsed.success &&
-      parsed.successSoft
+      parsed.successSoft &&
+      // Palettes saved before 2.7.1 lack it and may be unreadable; they get a new one.
+      parsed.onSuccess
     ) {
       return parsed as PartyPalette;
     }
@@ -151,6 +158,7 @@ export class ThemeService {
     rootStyle.setProperty('--theme-warning-soft', palette.warningSoft);
     rootStyle.setProperty('--theme-success', palette.success);
     rootStyle.setProperty('--theme-success-soft', palette.successSoft);
+    rootStyle.setProperty('--theme-on-success', palette.onSuccess);
   }
 
   private clearPartyPalette(): void {
@@ -168,6 +176,7 @@ export class ThemeService {
     rootStyle.removeProperty('--theme-warning-soft');
     rootStyle.removeProperty('--theme-success');
     rootStyle.removeProperty('--theme-success-soft');
+    rootStyle.removeProperty('--theme-on-success');
   }
 
   private generatePartyPalette(): PartyPalette {
@@ -176,21 +185,37 @@ export class ThemeService {
     const warningHue = (accentHue + randomInt(145, 210)) % 360;
     const successHue = (accentHue + randomInt(220, 320)) % 360;
 
-    const accent = hslToHex(accentHue, 100, 62);
+    // Blues are far darker than yellows at the same lightness, so each color starts at a base
+    // lightness and gets lighter until it reads on the tint it sits on.
+    const accentLightness = readableLightness(accentHue, 100, 62, hslToHex(accentHue, 78, 28));
+    const accent = hslToHex(accentHue, 100, accentLightness);
+    // Yellows are bright even as tints, so the tints darken where a lighter accent can't help.
+    const softStrongLightness = readableTintLightness(accentHue, 78, 28, accent);
+    const accentSoft = hslToHex(accentHue, 70, Math.min(20, softStrongLightness - 8));
+    const accentSoftStrong = hslToHex(accentHue, 78, softStrongLightness);
+    const onAccent = pickReadableForeground(accent);
+    // Hover and press move away from the text color, so the label stays readable.
+    const step = onAccent === DARK_FOREGROUND ? 1 : -1;
+
+    const infoSoft = hslToHex(infoHue, 56, 18);
+    const warningSoft = hslToHex(warningHue, 56, 18);
+    const successSoft = hslToHex(successHue, 54, 18);
+    const success = hslToHex(successHue, 100, readableLightness(successHue, 100, 62, successSoft));
 
     return {
       accent,
-      accentHover: hslToHex(accentHue, 100, 56),
-      accentPressed: hslToHex(accentHue, 96, 49),
-      accentSoft: hslToHex(accentHue, 70, 20),
-      accentSoftStrong: hslToHex(accentHue, 78, 28),
-      onAccent: pickReadableForeground(accent),
-      info: hslToHex(infoHue, 100, 66),
-      infoSoft: hslToHex(infoHue, 56, 18),
-      warning: hslToHex(warningHue, 100, 64),
-      warningSoft: hslToHex(warningHue, 56, 18),
-      success: hslToHex(successHue, 100, 62),
-      successSoft: hslToHex(successHue, 54, 18),
+      accentHover: hslToHex(accentHue, 100, clampLightness(accentLightness + 6 * step)),
+      accentPressed: hslToHex(accentHue, 96, clampLightness(accentLightness + 12 * step)),
+      accentSoft,
+      accentSoftStrong,
+      onAccent,
+      info: hslToHex(infoHue, 100, readableLightness(infoHue, 100, 66, infoSoft)),
+      infoSoft,
+      warning: hslToHex(warningHue, 100, readableLightness(warningHue, 100, 64, warningSoft)),
+      warningSoft,
+      success,
+      successSoft,
+      onSuccess: pickReadableForeground(success),
     };
   }
 }
@@ -281,7 +306,39 @@ function pickReadableForeground(hex: string): string {
   const contrastWithDark = contrastRatio(luminance, relativeLuminance(15, 23, 42));
   const contrastWithLight = contrastRatio(luminance, relativeLuminance(248, 250, 252));
 
-  return contrastWithDark >= contrastWithLight ? '#0f172a' : '#f8fafc';
+  return contrastWithDark >= contrastWithLight ? DARK_FOREGROUND : LIGHT_FOREGROUND;
+}
+
+/** The lowest lightness from `start` up whose color has MIN_CONTRAST against `background`. */
+function readableLightness(hue: number, saturation: number, start: number, background: string): number {
+  const { red, green, blue } = parseHex(background);
+  const backgroundLuminance = relativeLuminance(red, green, blue);
+
+  for (let lightness = start; lightness < 95; lightness++) {
+    const color = parseHex(hslToHex(hue, saturation, lightness));
+    const luminance = relativeLuminance(color.red, color.green, color.blue);
+    if (contrastRatio(luminance, backgroundLuminance) >= MIN_CONTRAST) return lightness;
+  }
+
+  return 95;
+}
+
+/** The highest lightness from `start` down whose tint lets `foreground` keep MIN_CONTRAST. */
+function readableTintLightness(hue: number, saturation: number, start: number, foreground: string): number {
+  const { red, green, blue } = parseHex(foreground);
+  const foregroundLuminance = relativeLuminance(red, green, blue);
+
+  for (let lightness = start; lightness > 10; lightness--) {
+    const color = parseHex(hslToHex(hue, saturation, lightness));
+    const luminance = relativeLuminance(color.red, color.green, color.blue);
+    if (contrastRatio(luminance, foregroundLuminance) >= MIN_CONTRAST) return lightness;
+  }
+
+  return 10;
+}
+
+function clampLightness(lightness: number): number {
+  return Math.min(95, Math.max(5, lightness));
 }
 
 function parseHex(hex: string): { red: number; green: number; blue: number } {
