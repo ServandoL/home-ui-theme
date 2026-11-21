@@ -6,7 +6,10 @@ import { MobileBottomNavComponent } from '../mobile-bottom-nav/mobile-bottom-nav
 import { ToastContainerComponent } from '../toast-container/toast-container.component';
 import { DesktopSidenavComponent } from '../desktop-sidenav/desktop-sidenav.component';
 import { HOME_THEME_TOKEN } from '../../providers/provider';
-import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
+import {
+  SHELL_ACCOUNT_COMPACT_COMPONENT,
+  SHELL_ACCOUNT_COMPONENT,
+} from '../../providers/shell-account';
 import { ShellLayoutService } from '../../services/shell-layout.service';
 
 @Component({
@@ -25,6 +28,7 @@ import { ShellLayoutService } from '../../services/shell-layout.service';
 export class ShellComponent {
   readonly config = inject(HOME_THEME_TOKEN);
   protected readonly account = inject(SHELL_ACCOUNT_COMPONENT, { optional: true });
+  protected readonly compactAccount = inject(SHELL_ACCOUNT_COMPACT_COMPONENT, { optional: true });
   protected readonly layout = inject(ShellLayoutService);
 
   // Whole class names, so Tailwind finds them when it scans the library.

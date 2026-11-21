@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, Routes } from '@angular/router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { provideHomeTheme, ThemeConfig } from '../../providers/provider';
-import { SHELL_ACCOUNT_COMPONENT } from '../../providers/shell-account';
+import {
+  SHELL_ACCOUNT_COMPACT_COMPONENT,
+  SHELL_ACCOUNT_COMPONENT,
+} from '../../providers/shell-account';
 import { ShellComponent } from './shell.component';
 
 @Component({ template: '' })
@@ -11,6 +14,11 @@ class Page {}
 
 @Component({ selector: 'app-test-account', template: 'Account' })
 class Account {}
+
+@Component({ selector: 'app-test-compact', template: '<span class="compact">{{ variant() }}</span>' })
+class CompactAccount {
+  readonly variant = input('');
+}
 
 const routes: Routes = [
   { path: 'list', component: Page },
@@ -41,6 +49,7 @@ describe('ShellComponent', () => {
           ...config,
         }),
         { provide: SHELL_ACCOUNT_COMPONENT, useValue: Account },
+        { provide: SHELL_ACCOUNT_COMPACT_COMPONENT, useValue: CompactAccount },
       ],
     });
     await TestBed.inject(Router).navigateByUrl(url);
@@ -64,6 +73,23 @@ describe('ShellComponent', () => {
     expect(button('Show navigation')).not.toBeNull();
     expect(el.querySelector('#desktop-sidenav')!.className).toContain('w-16');
     expect(el.querySelector('#desktop-sidenav a[title="Patterns"]')).not.toBeNull();
+  });
+
+  it('keeps the account visible while collapsed: in the header and the rail', async () => {
+    await render('/list');
+    const compact = [...el.querySelectorAll('.compact')].map((c) => c.textContent);
+
+    expect(compact).toEqual(['rail', 'header']);
+  });
+
+  it('drops the compact account once the header and sidebar expand', async () => {
+    await render('/list');
+    button('Show household')!.click();
+    button('Expand sidebar')!.click();
+    await fixture.whenStable();
+
+    expect(el.querySelectorAll('.compact').length).toBe(0);
+    expect(el.textContent).toContain('Account');
   });
 
   it('keeps the expanded layout and no controls when the app opts out', async () => {

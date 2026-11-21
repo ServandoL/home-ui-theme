@@ -8,7 +8,15 @@
       <!-- Stays a direct child of <main>: theme.css's party styles select it that way. -->
       <header class="lg:hidden z-30 px-4 app-surface border-b app-border" [class]="headerClass()">
         <div class="flex items-center gap-2">
-          <p class="flex-1 min-w-0 truncate text-sm font-semibold app-text">{{ config.appName }}</p>
+          <div class="flex flex-1 min-w-0 items-baseline gap-2">
+            <p class="min-w-0 shrink-0 max-w-[60%] truncate text-sm font-semibold app-text">{{ config.appName }}</p>
+            <!-- Collapsed: still say which household this is. -->
+            @if (compactAccount && layout.headerCollapsed()) {
+              <div class="min-w-0 flex-1">
+                <ng-container *ngComponentOutlet="compactAccount; inputs: { variant: 'header' }" />
+              </div>
+            }
+          </div>
           @if (account && layout.collapsible()) {
             <button
               type="button"

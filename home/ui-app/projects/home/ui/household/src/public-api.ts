@@ -11,3 +11,4 @@ export * from './lib/session';
 export * from './lib/household-gate.component';
 export * from './lib/household-picker.component';
 export * from './lib/household-badge.component';
+export * from './lib/household-badge-compact.component';

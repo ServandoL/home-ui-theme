@@ -202,11 +202,14 @@ import { ShellRouteData } from '@home/ui';
 
 Since 3.0.0 the shell is collapsible on every route, and starts collapsed:
 
-- the mobile header hides the household badge behind a chevron,
+- the mobile header hides the household badge behind a chevron, and shows the
+  household's name beside the app name,
 - the bottom nav is hidden behind a floating button at the bottom right, and
   gets a **Hide** tab once shown,
 - the desktop sidebar is a 64px rail of icons (routes without an icon show
-  their first letter) with an **Expand** button.
+  their first letter) with an **Expand** button, and a household icon that
+  links to the household in Home, or switches household when there's more
+  than one.
 
 What people expand or collapse is saved per app on the device
 (`home.shell.<app-name>` in localStorage); anything they haven't touched stays
@@ -558,6 +561,11 @@ const HOME_THEME_TOKEN: InjectionToken<ThemeConfig>; // inject to read the confi
 // A component the shell renders in its account area (sidenav and mobile header).
 // provideHousehold() sets it to the household badge.
 const SHELL_ACCOUNT_COMPONENT: InjectionToken<Type<unknown>>;
+// A compact one the shell renders while collapsed, with a `variant` input:
+// 'rail' (an icon in the desktop rail) or 'header' (beside the app name on mobile).
+// provideHousehold() sets it to the compact household badge.
+const SHELL_ACCOUNT_COMPACT_COMPONENT: InjectionToken<Type<unknown>>;
+type ShellAccountVariant = 'rail' | 'header';
 ```
 
 ---
@@ -632,7 +640,7 @@ The header is only sent to URLs on the page's own origin, relative or absolute (
 | `provideHousehold(config)` | Config and the shell badge |
 | `householdInterceptor`, `sessionInterceptor` | Register with `withInterceptors` |
 | `HouseholdGateComponent` | `<app-household-gate>` |
-| `HouseholdPickerComponent`, `HouseholdBadgeComponent` | Used by the gate and the shell; usable on their own |
+| `HouseholdPickerComponent`, `HouseholdBadgeComponent`, `HouseholdBadgeCompactComponent` | Used by the gate and the shell (the compact badge while it's collapsed); usable on their own |
 | `HouseholdContext` | `status`, `me`, `households`, `invites`, `current`, `currentId`, `select(id)`, `chooseAgain()`, `forget()`, `welcomeUrl()`, `manageUrl()` |
 | `SessionService`, `apiErrorMessage(err)` | Signed-out state; a message for a failed call |
 | `Me`, `HouseholdSummary`, `HouseholdInvite`, `Address`, `formatAddress(address)` | `/me`'s shapes |
