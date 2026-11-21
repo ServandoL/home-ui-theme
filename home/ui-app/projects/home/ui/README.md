@@ -20,6 +20,7 @@ shared UI components for the "home" family of apps.
 - [Validators](#validators)
 - [Models & tokens](#models--tokens)
 - [Households (`@home/ui/household`)](#households-homeuihousehold)
+- [Real-time updates (`@home/ui/realtime`)](#real-time-updates-homeuirealtime)
 - [Theme CSS](#theme-css)
 - [Development](#development)
 
@@ -567,6 +568,44 @@ The header is only sent to URLs on the page's own origin, relative or absolute (
 | `HouseholdContext` | `status`, `me`, `households`, `invites`, `current`, `currentId`, `select(id)`, `chooseAgain()`, `forget()`, `welcomeUrl()`, `manageUrl()` |
 | `SessionService`, `apiErrorMessage(err)` | Signed-out state; a message for a failed call |
 | `Me`, `HouseholdSummary`, `HouseholdInvite`, `Address`, `formatAddress(address)` | `/me`'s shapes |
+
+---
+
+## Real-time updates (`@home/ui/realtime`)
+
+Keeps every device viewing a household up to date. The app's backend serves the stream with
+home-household-spring 0.3.0 or later (`household.events.enabled: true`); this entry point reads it
+and tells the app what to refetch. It builds on `@home/ui/household`.
+
+```ts
+provideHttpClient(withFetch(), withInterceptors([sessionInterceptor, householdInterceptor, clientIdInterceptor])),
+provideHousehold({ appId: 'pet-qol' }),
+provideRealtime({ apiUrl: '/pet-qol-api' }),
+```
+
+Then subscribe where the app keeps its data:
+
+```ts
+const events = inject(HouseholdEvents);
+events.resync.subscribe(() => this.load());
+events.on('pets').subscribe(() => this.reloadPets());
+events.on('diary-entries').subscribe((change) => this.reloadDiary(change.parentId!));
+```
+
+| Export | What it does |
+| --- | --- |
+| `provideRealtime({ apiUrl, eventsPath?, hiddenGraceMs? })` | `apiUrl` is the app's API base. The stream is at `apiUrl + eventsPath` (default `/api/v1/events`). |
+| `HouseholdEvents` | Connects once a household is chosen and reconnects with backoff (1 s doubling to 30 s). `changes` and `on(resource)` emit other tabs' and devices' changes; `resync` fires on every (re)connect; `connected` is a signal. |
+| `clientIdInterceptor` | Adds `X-Client-Id` to writes to `apiUrl`, so a tab skips the events its own writes cause. |
+| `CLIENT_ID` | This tab's id, new on every page load. |
+
+Events carry ids only (`resource`, `action`, `id`, `parentId`), never data, so the app refetches
+through its API. Reload everything on `resync`: the server ends each stream after 15 minutes, and
+changes made while the stream was down aren't replayed. A tab hidden for `hiddenGraceMs` (default
+60 s) closes its stream and resyncs when it's shown again.
+
+The stream is read with `fetch` because `EventSource` can't send `X-Household-Id`. A
+`403 NOT_A_MEMBER` or `428 HOUSEHOLD_REQUIRED` forgets the household, like `householdInterceptor`.
 
 ---
 
