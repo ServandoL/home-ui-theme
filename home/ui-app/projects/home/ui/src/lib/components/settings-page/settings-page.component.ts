@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { Route } from '@angular/router';
 import { NavigationRoutes } from '../../models/routes.model';
 import { ThemeSettingsComponent } from '../theme-settings/theme-settings.component';
+import { ShellSettingsComponent } from '../shell-settings/shell-settings.component';
 
 /** A settings page for apps that have none of their own. */
 @Component({
-  imports: [ThemeSettingsComponent],
+  imports: [ThemeSettingsComponent, ShellSettingsComponent],
   selector: 'app-settings-page',
   template: `
     <div class="px-4 py-6 max-w-3xl mx-auto">
       <h1 class="text-2xl font-bold app-text mb-5">Settings</h1>
       <app-theme-settings />
+      <app-shell-settings class="block mt-4" />
     </div>
   `,
 })

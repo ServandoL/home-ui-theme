@@ -213,6 +213,11 @@ Choices are saved per app on the device (`home.shell.<app-name>` in
 localStorage). Without `collapsibleShell` or `shellCollapsed` the shell shows no
 collapse controls and looks as it did before 2.7.0.
 
+People can turn the controls on or off themselves with the **Layout** switch on
+the settings page (`<app-shell-settings>`, see [Settings and theme](#settings-and-theme)).
+`collapsibleShell` is only the default until they do. Turned off, nothing
+collapses, not even on a `shellCollapsed` route.
+
 ---
 
 ## Components
@@ -231,7 +236,7 @@ The light / dark / party switch lives on a settings page, not in the shell.
 - An app **without** a settings page uses the library's: add `SETTINGS_ROUTE`
   to the routes under the shell and `SETTINGS_NAV_ROUTE` to `provideHomeTheme`'s
   `routes`. The page is `SettingsPageComponent` (`<app-settings-page>`): a
-  "Settings" heading and the Appearance section.
+  "Settings" heading and the Appearance and Layout sections.
 
   ```ts
   // app.routes.ts
@@ -243,7 +248,10 @@ The light / dark / party switch lives on a settings page, not in the shell.
   ```
 
 - An app **with** its own settings page adds `ThemeSettingsComponent`
-  (`<app-theme-settings>`), the Appearance section as a card.
+  (`<app-theme-settings>`), the Appearance section as a card, and
+  `ShellSettingsComponent` (`<app-shell-settings>`), the Layout section: a switch
+  for the shell's collapse controls (see [Shell layout](#shell-layout)).
+  `SettingsPageComponent` shows both.
 
 `ThemeToggleComponent` (`<app-theme-toggle>`) is the switch itself; `[labels]="true"`
 shows each mode's name beside its icon. Each button sets `aria-pressed`.
@@ -440,7 +448,9 @@ The shell's layout for the current route. See [Shell layout](#shell-layout).
 | Member | Description |
 | ------ | ----------- |
 | `fill` | Computed: the route set `shellLayout: 'fill'`. |
-| `collapsible` | Computed: `collapsibleShell` is on or the route set `shellCollapsed`. |
+| `enabled` | Computed: the Settings switch — the person's choice, or `collapsibleShell` until they make one. |
+| `collapsible` | Computed: the controls show. The person's choice when they've made one; otherwise `collapsibleShell` or the route's `shellCollapsed`. |
+| `setEnabled(enabled)` | Turn the controls on or off for this app; saved on the device. |
 | `headerCollapsed` / `navCollapsed` / `sidenavCollapsed` | Computed: which parts are collapsed. Always `false` when not `collapsible`. |
 | `toggleHeader()` / `toggleNav()` / `toggleSidenav()` | Collapse or expand a part. |
 

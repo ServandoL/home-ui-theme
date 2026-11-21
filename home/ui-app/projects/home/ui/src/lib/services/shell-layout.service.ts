@@ -25,12 +25,16 @@ export type ShellPart = 'header' | 'nav' | 'sidenav';
 
 type ShellCollapsed = Record<ShellPart, boolean>;
 
-const NONE_COLLAPSED: ShellCollapsed = { header: false, nav: false, sidenav: false };
+/** What's saved per app: the collapsed parts, and the Settings switch (`null` until it's used). */
+type ShellSaved = ShellCollapsed & { enabled: boolean | null };
+
+const NOTHING_SAVED: ShellSaved = { header: false, nav: false, sidenav: false, enabled: null };
 
 /**
  * Which parts of the shell are collapsed, and whether the current route fills it. The collapse
- * controls show when `provideHomeTheme` sets `collapsibleShell` or the route sets `shellCollapsed`.
- * Choices are saved per app on this device.
+ * controls show when `provideHomeTheme` sets `collapsibleShell` or the route sets `shellCollapsed`,
+ * unless the person turned them off in Settings (`setEnabled`), which also wins over
+ * `shellCollapsed`. Choices are saved per app on this device.
  */
 @Injectable({ providedIn: 'root' })
 export class ShellLayoutService {
@@ -38,16 +42,20 @@ export class ShellLayoutService {
   private readonly config = inject(HOME_THEME_TOKEN, { optional: true });
   private readonly storageKey = `home.shell.${slug(this.config?.appName ?? 'app')}`;
 
-  private readonly saved = signal<ShellCollapsed>(readSaved(this.storageKey));
+  private readonly saved = signal<ShellSaved>(readSaved(this.storageKey));
   private readonly routeData = signal<ShellRouteData>({});
   /** Toggles made on a `shellCollapsed` route; cleared when the route changes. */
   private readonly visit = signal<Partial<ShellCollapsed>>({});
   private currentRoute: Route | null = null;
 
   readonly fill = computed(() => this.routeData().shellLayout === 'fill');
-  readonly collapsible = computed(
-    () => !!this.config?.collapsibleShell || this.routeData().shellCollapsed === true,
-  );
+  /** The Settings switch: the person's choice, or the app's `collapsibleShell`. */
+  readonly enabled = computed(() => this.saved().enabled ?? !!this.config?.collapsibleShell);
+  readonly collapsible = computed(() => {
+    const choice = this.saved().enabled;
+    if (choice !== null) return choice;
+    return !!this.config?.collapsibleShell || this.routeData().shellCollapsed === true;
+  });
   readonly headerCollapsed = computed(() => this.isCollapsed('header'));
   readonly navCollapsed = computed(() => this.isCollapsed('nav'));
   readonly sidenavCollapsed = computed(() => this.isCollapsed('sidenav'));
@@ -62,6 +70,12 @@ export class ShellLayoutService {
         takeUntilDestroyed(),
       )
       .subscribe(() => this.readRoute());
+  }
+
+  /** Turn the collapse controls on or off for this app, from Settings. */
+  setEnabled(enabled: boolean): void {
+    this.saved.update((s) => ({ ...s, enabled }));
+    this.save();
   }
 
   toggleHeader(): void {
@@ -89,6 +103,10 @@ export class ShellLayoutService {
       return;
     }
     this.saved.update((s) => ({ ...s, [part]: collapsed }));
+    this.save();
+  }
+
+  private save(): void {
     writeStorage(this.storageKey, JSON.stringify(this.saved()));
   }
 
@@ -112,18 +130,19 @@ function slug(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'app';
 }
 
-function readSaved(key: string): ShellCollapsed {
+function readSaved(key: string): ShellSaved {
   try {
     const raw = typeof localStorage === 'undefined' ? null : localStorage.getItem(key);
-    const parsed = raw ? (JSON.parse(raw) as Partial<ShellCollapsed>) : {};
+    const parsed = raw ? (JSON.parse(raw) as Partial<ShellSaved>) : {};
     return {
       header: parsed.header === true,
       nav: parsed.nav === true,
       sidenav: parsed.sidenav === true,
+      enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : null,
     };
   } catch {
-    // Missing or blocked storage, or a value that isn't ours: start expanded.
-    return { ...NONE_COLLAPSED };
+    // Missing or blocked storage, or a value that isn't ours: start expanded, app default.
+    return { ...NOTHING_SAVED };
   }
 }
 

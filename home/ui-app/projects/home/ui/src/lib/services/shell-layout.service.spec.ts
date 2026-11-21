@@ -75,6 +75,7 @@ describe('ShellLayoutService', () => {
       header: false,
       nav: true,
       sidenav: false,
+      enabled: null,
     });
   });
 
@@ -128,6 +129,50 @@ describe('ShellLayoutService', () => {
     await router.navigateByUrl('/editor');
 
     expect(service().collapsible()).toBe(true);
+    expect(service().navCollapsed()).toBe(true);
+  });
+
+  it('starts the Settings switch at the app’s default', async () => {
+    const on = setup();
+    await on.router.navigateByUrl('/list');
+    expect(on.service().enabled()).toBe(true);
+
+    TestBed.resetTestingModule();
+    const off = setup({ collapsibleShell: false });
+    await off.router.navigateByUrl('/list');
+    expect(off.service().enabled()).toBe(false);
+  });
+
+  it('turns the controls off everywhere, even on a collapsed route, and saves it', async () => {
+    const { router, service } = setup();
+    await router.navigateByUrl('/editor');
+    service().setEnabled(false);
+
+    expect(service().enabled()).toBe(false);
+    expect(service().collapsible()).toBe(false);
+    expect(service().headerCollapsed()).toBe(false);
+    expect(service().navCollapsed()).toBe(false);
+    expect(service().sidenavCollapsed()).toBe(false);
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).enabled).toBe(false);
+  });
+
+  it('turns the controls on for an app that doesn’t default to them', async () => {
+    const { router, service } = setup({ collapsibleShell: false });
+    await router.navigateByUrl('/list');
+    service().setEnabled(true);
+
+    expect(service().collapsible()).toBe(true);
+    service().toggleSidenav();
+    expect(service().sidenavCollapsed()).toBe(true);
+  });
+
+  it('remembers the switch and the collapsed parts once turned back on', async () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ nav: true, enabled: false }));
+    const { router, service } = setup();
+    await router.navigateByUrl('/list');
+    expect(service().navCollapsed()).toBe(false);
+
+    service().setEnabled(true);
     expect(service().navCollapsed()).toBe(true);
   });
 
