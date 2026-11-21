@@ -22,6 +22,10 @@ import {
   phosphorTrayArrowUpDuotone,
 } from '@ng-icons/phosphor-icons/duotone';
 import {
+  heroChevronDoubleLeftSolid,
+  heroChevronDoubleRightSolid,
+  heroChevronDownSolid,
+  heroChevronUpSolid,
   heroCog6ToothSolid,
   heroMoonSolid,
   heroQuestionMarkCircleSolid,
@@ -35,6 +39,8 @@ export interface ThemeConfig {
   appName: string;
   routes: NavigationRoutes[];
   navExpandType?: NavExpandType;
+  /** Show buttons that collapse the mobile header, bottom nav and desktop sidebar. See ShellLayoutService. */
+  collapsibleShell?: boolean;
 }
 
 export const HOME_THEME_TOKEN = new InjectionToken<ThemeConfig>('app.config');
@@ -53,6 +59,10 @@ export function provideHomeTheme(config: ThemeConfig) {
       heroQuestionMarkCircleSolid,
       heroSparklesSolid,
       heroCog6ToothSolid,
+      heroChevronUpSolid,
+      heroChevronDownSolid,
+      heroChevronDoubleLeftSolid,
+      heroChevronDoubleRightSolid,
       phosphorLeafDuotone,
       phosphorAcornDuotone,
       phosphorFlowerLotusDuotone,
