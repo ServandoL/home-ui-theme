@@ -200,23 +200,23 @@ import { ShellRouteData } from '@home/ui';
 | `shellLayout: 'fill'` | `<main>` becomes a flex column that doesn't scroll, so the page can fill the space and scroll itself (an editor with its own sticky headers). Give the page's host `flex-1 min-h-0`. It only pads for the bottom nav while the nav shows. Default `'scroll'`. |
 | `shellCollapsed: true` | The mobile header, bottom nav and desktop sidebar start collapsed. Expanding one lasts until the person leaves the route; then their saved choice comes back. |
 
-To let people collapse the shell on every route, pass `collapsibleShell: true`
-to `provideHomeTheme()`. Then:
+Since 3.0.0 the shell is collapsible on every route, and starts collapsed:
 
 - the mobile header hides the household badge behind a chevron,
-- the bottom nav gets a **Hide** tab and comes back from a floating button at
-  the bottom right,
-- the desktop sidebar collapses to a 64px rail of icons (routes without an
-  icon show their first letter).
+- the bottom nav is hidden behind a floating button at the bottom right, and
+  gets a **Hide** tab once shown,
+- the desktop sidebar is a 64px rail of icons (routes without an icon show
+  their first letter) with an **Expand** button.
 
-Choices are saved per app on the device (`home.shell.<app-name>` in
-localStorage). Without `collapsibleShell` or `shellCollapsed` the shell shows no
-collapse controls and looks as it did before 2.7.0.
+What people expand or collapse is saved per app on the device
+(`home.shell.<app-name>` in localStorage); anything they haven't touched stays
+collapsed.
 
-People can turn the controls on or off themselves with the **Layout** switch on
-the settings page (`<app-shell-settings>`, see [Settings and theme](#settings-and-theme)).
-`collapsibleShell` is only the default until they do. Turned off, nothing
-collapses, not even on a `shellCollapsed` route.
+People can turn the controls off with the **Layout** switch on the settings
+page (`<app-shell-settings>`, see [Settings and theme](#settings-and-theme)).
+Turned off, nothing collapses, not even on a `shellCollapsed` route. An app can
+make off the default with `collapsibleShell: false` in `provideHomeTheme()`; the
+shell then looks as it did before 2.7.0 until someone turns the switch on.
 
 ---
 
@@ -535,7 +535,7 @@ interface ThemeConfig {
   appName: string;
   routes: NavigationRoutes[];
   navExpandType?: NavExpandType; // default 'bottom-drawer'
-  collapsibleShell?: boolean; // default false
+  collapsibleShell?: boolean; // default true
 }
 
 interface ShellRouteData {

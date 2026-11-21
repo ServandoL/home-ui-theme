@@ -53,15 +53,28 @@ describe('ShellComponent', () => {
   const nav = () => el.querySelector<HTMLElement>('#mobile-bottom-nav')!;
   const button = (label: string) => el.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
 
-  it('keeps the scrolling layout and no collapse controls by default', async () => {
+  it('starts collapsed, with the controls, on a first visit', async () => {
     await render('/list');
 
     expect(main().className).toContain('overflow-y-auto');
+    expect(main().className).toContain('pb-16');
+    expect(button('Show household')!.getAttribute('aria-expanded')).toBe('false');
+    expect(el.querySelector('#shell-header-account')!.hasAttribute('hidden')).toBe(true);
+    expect(nav().hasAttribute('inert')).toBe(true);
+    expect(button('Show navigation')).not.toBeNull();
+    expect(el.querySelector('#desktop-sidenav')!.className).toContain('w-16');
+    expect(el.querySelector('#desktop-sidenav a[title="Patterns"]')).not.toBeNull();
+  });
+
+  it('keeps the expanded layout and no controls when the app opts out', async () => {
+    await render('/list', { collapsibleShell: false });
+
     expect(main().className).toContain('pb-24');
-    expect(button('Hide household')).toBeNull();
+    expect(button('Show household')).toBeNull();
     expect(button('Hide navigation')).toBeNull();
-    expect(button('Collapse sidebar')).toBeNull();
+    expect(button('Expand sidebar')).toBeNull();
     expect(el.querySelector('#shell-header-account')!.hasAttribute('hidden')).toBe(false);
+    expect(nav().hasAttribute('inert')).toBe(false);
   });
 
   it('fills on a fill route and starts collapsed', async () => {
@@ -88,24 +101,21 @@ describe('ShellComponent', () => {
   });
 
   it('toggles the header and reports it', async () => {
-    await render('/list', { collapsibleShell: true });
-    const toggle = button('Hide household')!;
-    expect(toggle.getAttribute('aria-expanded')).toBe('true');
-
-    toggle.click();
+    await render('/list');
+    button('Show household')!.click();
     await fixture.whenStable();
 
-    expect(button('Show household')!.getAttribute('aria-expanded')).toBe('false');
-    expect(el.querySelector('#shell-header-account')!.hasAttribute('hidden')).toBe(true);
+    expect(button('Hide household')!.getAttribute('aria-expanded')).toBe('true');
+    expect(el.querySelector('#shell-header-account')!.hasAttribute('hidden')).toBe(false);
   });
 
-  it('collapses the desktop sidebar to a rail', async () => {
-    await render('/list', { collapsibleShell: true });
-    button('Collapse sidebar')!.click();
+  it('expands the desktop sidebar from the rail', async () => {
+    await render('/list');
+    button('Expand sidebar')!.click();
     await fixture.whenStable();
 
-    expect(el.querySelector('#desktop-sidenav')!.className).toContain('w-16');
-    expect(el.querySelector('main')!.parentElement!.className).toContain('lg:pl-16');
-    expect(el.querySelector('#desktop-sidenav a[title="Patterns"]')).not.toBeNull();
+    expect(el.querySelector('#desktop-sidenav')!.className).toContain('w-64');
+    expect(el.querySelector('main')!.parentElement!.className).toContain('lg:pl-64');
+    expect(button('Collapse sidebar')!.getAttribute('aria-expanded')).toBe('true');
   });
 });

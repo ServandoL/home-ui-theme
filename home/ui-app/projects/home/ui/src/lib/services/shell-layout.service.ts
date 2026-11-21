@@ -28,13 +28,15 @@ type ShellCollapsed = Record<ShellPart, boolean>;
 /** What's saved per app: the collapsed parts, and the Settings switch (`null` until it's used). */
 type ShellSaved = ShellCollapsed & { enabled: boolean | null };
 
-const NOTHING_SAVED: ShellSaved = { header: false, nav: false, sidenav: false, enabled: null };
+/** A first visit: every part collapsed, and the switch at the app's default. */
+const NOTHING_SAVED: ShellSaved = { header: true, nav: true, sidenav: true, enabled: null };
 
 /**
  * Which parts of the shell are collapsed, and whether the current route fills it. The collapse
- * controls show when `provideHomeTheme` sets `collapsibleShell` or the route sets `shellCollapsed`,
- * unless the person turned them off in Settings (`setEnabled`), which also wins over
- * `shellCollapsed`. Choices are saved per app on this device.
+ * controls show unless `provideHomeTheme` sets `collapsibleShell: false` (and the route doesn't set
+ * `shellCollapsed`), or the person turned them off in Settings (`setEnabled`), which also wins
+ * over `shellCollapsed`. Parts start collapsed until the person expands them. Choices are saved
+ * per app on this device.
  */
 @Injectable({ providedIn: 'root' })
 export class ShellLayoutService {
@@ -49,12 +51,13 @@ export class ShellLayoutService {
   private currentRoute: Route | null = null;
 
   readonly fill = computed(() => this.routeData().shellLayout === 'fill');
-  /** The Settings switch: the person's choice, or the app's `collapsibleShell`. */
-  readonly enabled = computed(() => this.saved().enabled ?? !!this.config?.collapsibleShell);
+  private readonly appDefault = this.config?.collapsibleShell ?? true;
+  /** The Settings switch: the person's choice, or the app's `collapsibleShell` (on unless false). */
+  readonly enabled = computed(() => this.saved().enabled ?? this.appDefault);
   readonly collapsible = computed(() => {
     const choice = this.saved().enabled;
     if (choice !== null) return choice;
-    return !!this.config?.collapsibleShell || this.routeData().shellCollapsed === true;
+    return this.appDefault || this.routeData().shellCollapsed === true;
   });
   readonly headerCollapsed = computed(() => this.isCollapsed('header'));
   readonly navCollapsed = computed(() => this.isCollapsed('nav'));
@@ -134,14 +137,15 @@ function readSaved(key: string): ShellSaved {
   try {
     const raw = typeof localStorage === 'undefined' ? null : localStorage.getItem(key);
     const parsed = raw ? (JSON.parse(raw) as Partial<ShellSaved>) : {};
+    const part = (value: unknown) => (typeof value === 'boolean' ? value : true);
     return {
-      header: parsed.header === true,
-      nav: parsed.nav === true,
-      sidenav: parsed.sidenav === true,
+      header: part(parsed.header),
+      nav: part(parsed.nav),
+      sidenav: part(parsed.sidenav),
       enabled: typeof parsed.enabled === 'boolean' ? parsed.enabled : null,
     };
   } catch {
-    // Missing or blocked storage, or a value that isn't ours: start expanded, app default.
+    // Missing or blocked storage, or a value that isn't ours: a first visit.
     return { ...NOTHING_SAVED };
   }
 }

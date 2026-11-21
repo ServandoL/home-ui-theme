@@ -40,14 +40,23 @@ describe('ShellLayoutService', () => {
     return { router: TestBed.inject(Router), service: () => TestBed.inject(ShellLayoutService) };
   }
 
-  it('scrolls and stays expanded by default', async () => {
+  it('scrolls and starts with every part collapsed on a first visit', async () => {
     const { router, service } = setup();
     await router.navigateByUrl('/list');
 
     expect(service().fill()).toBe(false);
-    expect(service().headerCollapsed()).toBe(false);
-    expect(service().navCollapsed()).toBe(false);
-    expect(service().sidenavCollapsed()).toBe(false);
+    expect(service().headerCollapsed()).toBe(true);
+    expect(service().navCollapsed()).toBe(true);
+    expect(service().sidenavCollapsed()).toBe(true);
+  });
+
+  it('turns the controls on when the app doesn’t set collapsibleShell', async () => {
+    const { router, service } = setup({ collapsibleShell: undefined });
+    await router.navigateByUrl('/list');
+
+    expect(service().enabled()).toBe(true);
+    expect(service().collapsible()).toBe(true);
+    expect(service().navCollapsed()).toBe(true);
   });
 
   it('reads the route that was open before the service was created', async () => {
@@ -70,22 +79,23 @@ describe('ShellLayoutService', () => {
     await router.navigateByUrl('/list');
     service().toggleNav();
 
-    expect(service().navCollapsed()).toBe(true);
+    expect(service().navCollapsed()).toBe(false);
     expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!)).toEqual({
-      header: false,
-      nav: true,
-      sidenav: false,
+      header: true,
+      nav: false,
+      sidenav: true,
       enabled: null,
     });
   });
 
   it('restores saved choices on load', async () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ sidenav: true }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ sidenav: false }));
     const { router, service } = setup();
     await router.navigateByUrl('/list');
 
-    expect(service().sidenavCollapsed()).toBe(true);
-    expect(service().headerCollapsed()).toBe(false);
+    expect(service().sidenavCollapsed()).toBe(false);
+    // Parts with nothing saved keep the collapsed default.
+    expect(service().headerCollapsed()).toBe(true);
   });
 
   it('keeps expansions on a collapsed route for that visit only', async () => {
@@ -99,8 +109,9 @@ describe('ShellLayoutService', () => {
     await router.navigateByUrl('/editor?mode=view');
     expect(service().headerCollapsed()).toBe(false);
 
+    // Leaving brings back the saved choice: collapsed, the default.
     await router.navigateByUrl('/list');
-    expect(service().headerCollapsed()).toBe(false);
+    expect(service().headerCollapsed()).toBe(true);
 
     await router.navigateByUrl('/editor');
     expect(service().headerCollapsed()).toBe(true);
@@ -115,7 +126,7 @@ describe('ShellLayoutService', () => {
     expect(service().navCollapsed()).toBe(true);
   });
 
-  it('never collapses when the app and route don’t ask for it', async () => {
+  it('never collapses when the app opts out and the route doesn’t ask', async () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ header: true, nav: true, sidenav: true }));
     const { router, service } = setup({ collapsibleShell: false });
     await router.navigateByUrl('/list');
@@ -156,14 +167,15 @@ describe('ShellLayoutService', () => {
     expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).enabled).toBe(false);
   });
 
-  it('turns the controls on for an app that doesn’t default to them', async () => {
+  it('turns the controls on for an app that opts out, starting collapsed', async () => {
     const { router, service } = setup({ collapsibleShell: false });
     await router.navigateByUrl('/list');
     service().setEnabled(true);
 
     expect(service().collapsible()).toBe(true);
-    service().toggleSidenav();
     expect(service().sidenavCollapsed()).toBe(true);
+    service().toggleSidenav();
+    expect(service().sidenavCollapsed()).toBe(false);
   });
 
   it('remembers the switch and the collapsed parts once turned back on', async () => {
@@ -182,7 +194,7 @@ describe('ShellLayoutService', () => {
     await router.navigateByUrl('/list');
 
     expect(() => service().toggleNav()).not.toThrow();
-    expect(service().navCollapsed()).toBe(true);
+    expect(service().navCollapsed()).toBe(false);
   });
 
   it('works when localStorage throws or holds something else', async () => {
@@ -195,9 +207,9 @@ describe('ShellLayoutService', () => {
     const { router, service } = setup();
     await router.navigateByUrl('/list');
 
-    expect(service().navCollapsed()).toBe(false);
-    expect(() => service().toggleNav()).not.toThrow();
     expect(service().navCollapsed()).toBe(true);
+    expect(() => service().toggleNav()).not.toThrow();
+    expect(service().navCollapsed()).toBe(false);
   });
 });
 

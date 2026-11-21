@@ -39,7 +39,10 @@ export interface ThemeConfig {
   appName: string;
   routes: NavigationRoutes[];
   navExpandType?: NavExpandType;
-  /** Show buttons that collapse the mobile header, bottom nav and desktop sidebar. See ShellLayoutService. */
+  /**
+   * Show buttons that collapse the mobile header, bottom nav and desktop sidebar, which start
+   * collapsed. Default true; people can change it in Settings. See ShellLayoutService.
+   */
   collapsibleShell?: boolean;
 }
 
