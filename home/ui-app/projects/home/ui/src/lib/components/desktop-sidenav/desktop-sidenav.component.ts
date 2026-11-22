@@ -18,6 +18,7 @@ import { ShellLayoutService } from '../../services/shell-layout.service';
 export class DesktopSidenavComponent {
   protected readonly navService = inject(NavigationService);
   protected readonly config = inject(HOME_THEME_TOKEN);
+  protected readonly homeLink = this.config.homeLink ?? true;
   protected readonly account = inject(SHELL_ACCOUNT_COMPONENT, { optional: true });
   protected readonly compactAccount = inject(SHELL_ACCOUNT_COMPACT_COMPONENT, { optional: true });
   protected readonly layout = inject(ShellLayoutService);

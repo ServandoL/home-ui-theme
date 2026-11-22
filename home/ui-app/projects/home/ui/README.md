@@ -142,10 +142,13 @@ It renders:
 
 | Part | Description |
 | ---- | ----------- |
-| Mobile header | Sticky header (hidden at `lg`+) with `config.appName` and the account slot. |
+| Mobile header | Sticky header (hidden at `lg`+) with a Home link, `config.appName` and the account slot. |
 | `<router-outlet>` | Your routed content, inside a scrollable `<main>` with bottom padding to clear the tab bar. |
 | `<app-mobile-bottom-nav>` | Fixed bottom tab bar (hidden at `lg`+). |
 | `<app-toast-container>` | Global toast stack driven by `ToastService`. |
+
+The mobile header and the desktop sidebar link back to the Home landing page (`/`). Home itself
+passes `homeLink: false` to hide it. `provideHomeTheme` registers its icon, `heroHomeSolid`.
 
 The shell has no theme switch; it's on each app's settings page (see
 [Settings and theme](#settings-and-theme)).

@@ -27,6 +27,7 @@ import {
   heroChevronDownSolid,
   heroChevronUpSolid,
   heroCog6ToothSolid,
+  heroHomeSolid,
   heroMoonSolid,
   heroQuestionMarkCircleSolid,
   heroSparklesSolid,
@@ -46,6 +47,11 @@ export interface ThemeConfig {
    * collapsed. Default true; people can change it in Settings. See ShellLayoutService.
    */
   collapsibleShell?: boolean;
+  /**
+   * Show a link back to the Home landing page (`/`) in the mobile header and the desktop sidebar.
+   * Default true; Home itself turns it off.
+   */
+  homeLink?: boolean;
   /** What the Help page (HELP_ROUTE) says about this app. */
   help?: HelpContent;
 }
@@ -68,6 +74,7 @@ export function provideHomeTheme(config: ThemeConfig) {
       heroQuestionMarkCircleSolid,
       heroSparklesSolid,
       heroCog6ToothSolid,
+      heroHomeSolid,
       heroChevronUpSolid,
       heroChevronDownSolid,
       heroChevronDoubleLeftSolid,

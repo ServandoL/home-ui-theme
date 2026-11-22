@@ -75,6 +75,22 @@ describe('ShellComponent', () => {
     expect(el.querySelector('#desktop-sidenav a[title="Patterns"]')).not.toBeNull();
   });
 
+  it('links back to Home from the header and the sidebar', async () => {
+    await render('/list');
+    const homeLinks = () => el.querySelectorAll('a[href="/"]');
+
+    expect(homeLinks().length).toBe(2);
+    button('Expand sidebar')!.click();
+    await fixture.whenStable();
+    expect(homeLinks().length).toBe(2);
+  });
+
+  it('drops the Home link when the app is Home', async () => {
+    await render('/list', { homeLink: false });
+
+    expect(el.querySelectorAll('a[href="/"]').length).toBe(0);
+  });
+
   it('keeps the account visible while collapsed: in the header and the rail', async () => {
     await render('/list');
     const compact = [...el.querySelectorAll('.compact')].map((c) => c.textContent);
