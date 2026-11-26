@@ -34,6 +34,7 @@ import {
   heroSunSolid,
 } from '@ng-icons/heroicons/solid';
 import { SeasonIconService } from '../services/season-icon.service';
+import { SeasonalThemeService } from '../seasonal/seasonal-theme.service';
 import { StaleBuildRecovery } from '../services/stale-build-recovery.service';
 import { NavExpandType } from '../models/bottom-nav';
 import { HelpContent } from '../models/help.model';
@@ -52,6 +53,11 @@ export interface ThemeConfig {
    * Default true; Home itself turns it off.
    */
   homeLink?: boolean;
+  /**
+   * The seasonal look: colors and decorations that follow the season and US holidays. Default
+   * true; people can turn it off or keep one look in Settings. See SeasonalThemeService.
+   */
+  seasonal?: boolean;
   /** What the Help page (HELP_ROUTE) says about this app. */
   help?: HelpContent;
 }
@@ -62,6 +68,8 @@ export function provideHomeTheme(config: ThemeConfig) {
   return [
     provideAppInitializer(() => {
       inject(ThemeService).initialize();
+      // Sets data-look on <html> before the first paint, so the page doesn't flash plain.
+      if (config.seasonal ?? true) inject(SeasonalThemeService);
       const navService = inject(NavigationService);
       navService.setRoutes(config.routes);
       navService.setNavExpandType(config.navExpandType ?? 'bottom-drawer');

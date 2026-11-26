@@ -74,12 +74,12 @@ describe('ShellSettingsComponent', () => {
     expect(el.querySelector('[role="switch"]')!.getAttribute('aria-checked')).toBe('true');
   });
 
-  it('is on the library’s settings page, under Appearance', async () => {
+  it('is on the library’s settings page, after Appearance and Seasonal look', async () => {
     setup(false);
     const fixture = TestBed.createComponent(SettingsPageComponent);
     await fixture.whenStable();
     const headings = [...(fixture.nativeElement as HTMLElement).querySelectorAll('h2')];
 
-    expect(headings.map((h) => h.textContent?.trim())).toEqual(['Appearance', 'Layout']);
+    expect(headings.map((h) => h.textContent?.trim())).toEqual(['Appearance', 'Seasonal look', 'Layout']);
   });
 });

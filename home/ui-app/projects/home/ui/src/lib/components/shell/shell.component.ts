@@ -11,6 +11,7 @@ import {
   SHELL_ACCOUNT_COMPONENT,
 } from '../../providers/shell-account';
 import { ShellLayoutService } from '../../services/shell-layout.service';
+import { SeasonalBackgroundComponent } from '../../seasonal/seasonal-background.component';
 
 @Component({
   selector: 'app-shell',
@@ -22,12 +23,14 @@ import { ShellLayoutService } from '../../services/shell-layout.service';
     DesktopSidenavComponent,
     NgComponentOutlet,
     NgIcon,
+    SeasonalBackgroundComponent,
   ],
   templateUrl: './shell.component.html',
 })
 export class ShellComponent {
   readonly config = inject(HOME_THEME_TOKEN);
   protected readonly homeLink = this.config.homeLink ?? true;
+  protected readonly seasonal = this.config.seasonal ?? true;
   protected readonly account = inject(SHELL_ACCOUNT_COMPONENT, { optional: true });
   protected readonly compactAccount = inject(SHELL_ACCOUNT_COMPACT_COMPONENT, { optional: true });
   protected readonly layout = inject(ShellLayoutService);

@@ -271,6 +271,40 @@ The light / dark / party switch lives on a settings page, not in the shell.
 `ThemeToggleComponent` (`<app-theme-toggle>`) is the switch itself; `[labels]="true"`
 shows each mode's name beside its icon. Each button sets `aria-pressed`.
 
+### Seasonal look
+
+Every app takes on the season's colors, and a holiday's around popular US holidays: a tinted
+background, the accent color, and decorations drifting behind the page (falling leaves, snow,
+hearts, fireworks). It follows the date on its own; `SeasonalThemeService` checks once a minute,
+so a tab left open overnight moves on too.
+
+| Look | Shows |
+|---|---|
+| Spring, Summer, Fall, Winter | From Mar 20, Jun 21, Sep 22 and Dec 21 |
+| New Year's | Dec 31 – Jan 1 |
+| Valentine's Day | Feb 10 – 14 |
+| St. Patrick's Day | Mar 14 – 17 |
+| Easter | Palm Sunday to Easter Sunday |
+| Independence Day | Jul 1 – 4 |
+| Halloween | Oct 20 – 31 |
+| Thanksgiving | The Sunday before through the Sunday after |
+| Christmas | Dec 1 – 26 |
+
+- People choose Automatic (the default), Off, or one look to keep, in the Seasonal look section
+  of Settings. `SettingsPageComponent` shows it; an app with its own settings page adds
+  `SeasonalSettingsComponent` (`<app-seasonal-settings>`) beside `<app-theme-settings>`, or the bare
+  `SeasonalLookPickerComponent` (`<app-seasonal-look-picker>`) under its own heading. The choice
+  is saved on the device, under one key for every home app.
+- The service sets `data-look` on `<html>` (nothing while it's off); `theme.css` recolors
+  `--theme-bg` and the `--theme-accent` family for each look, in light and dark. The Party theme
+  keeps its own colors.
+- The shell draws a light layer of decorations (`<app-seasonal-background intensity="soft">`).
+  Home draws the full layer itself, and puts `app-seasonal-tiles` on its launcher grid so the
+  tiles turn see-through. The decorations hold still under reduced motion.
+- `provideHomeTheme({ seasonal: false })` turns it all off for an app.
+- The looks, their dates, greetings and decorations are in `seasonal/seasonal-looks.ts`; their
+  colors are at the end of `theme.css`.
+
 ### Help page
 
 `HelpPageComponent` (`<app-help-page>`) tells people how to use the app. Add `HELP_ROUTE` under the
@@ -422,6 +456,8 @@ reactive `FormControl<number | null>`.
 ```
 
 ### `SeasonBackgroundComponent` — `<app-season-background>`
+
+Superseded by `<app-seasonal-background>` (see [Seasonal look](#seasonal-look)); kept for now.
 
 Decorative layer of randomly placed, rotated, semi-transparent seasonal
 icons. Positions itself `absolute inset-0`, so place it inside a
