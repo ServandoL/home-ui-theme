@@ -558,13 +558,13 @@ html[data-look]:not([data-theme='party']) .app-seasonal-tiles .app-card ng-icon 
 
 html:not([data-theme='party'])[data-look='spring'] {
   --theme-bg: #f6f8f1;
-  --theme-accent: #3f7d4e;
-  --season-bar: color-mix(in srgb, #3f7d4e 10%, #f6f8f1);
-  --season-bar-accent: color-mix(in srgb, #3f7d4e 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #3f7d4e 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #3f7d4e 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #3f7d4e 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #3f7d4e 22%, #ffffff);
+  --theme-accent: #366a42;
+  --season-bar: color-mix(in srgb, #366a42 10%, #f6f8f1);
+  --season-bar-accent: color-mix(in srgb, #366a42 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #366a42 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #366a42 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #366a42 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #366a42 22%, #ffffff);
   --season-glow-1: rgba(244,166,192,.45);
   --season-glow-2: rgba(155,209,122,.35);
   --season-card: rgba(255,255,255,.82);
@@ -574,13 +574,13 @@ html:not([data-theme='party'])[data-look='spring'] {
 
 html:not([data-theme='party'])[data-look='summer'] {
   --theme-bg: #f1f9fb;
-  --theme-accent: #0e7490;
-  --season-bar: color-mix(in srgb, #0e7490 10%, #f1f9fb);
-  --season-bar-accent: color-mix(in srgb, #0e7490 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #0e7490 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #0e7490 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #0e7490 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #0e7490 22%, #ffffff);
+  --theme-accent: #0c6780;
+  --season-bar: color-mix(in srgb, #0c6780 10%, #f1f9fb);
+  --season-bar-accent: color-mix(in srgb, #0c6780 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #0c6780 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #0c6780 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #0c6780 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #0c6780 22%, #ffffff);
   --season-glow-1: rgba(250,204,21,.45);
   --season-glow-2: rgba(56,189,248,.3);
   --season-card: rgba(255,255,255,.85);
@@ -590,13 +590,13 @@ html:not([data-theme='party'])[data-look='summer'] {
 
 html:not([data-theme='party'])[data-look='fall'] {
   --theme-bg: #fbf6ee;
-  --theme-accent: #a4460f;
-  --season-bar: color-mix(in srgb, #a4460f 10%, #fbf6ee);
-  --season-bar-accent: color-mix(in srgb, #a4460f 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #a4460f 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #a4460f 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #a4460f 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #a4460f 22%, #ffffff);
+  --theme-accent: #9d430e;
+  --season-bar: color-mix(in srgb, #9d430e 10%, #fbf6ee);
+  --season-bar-accent: color-mix(in srgb, #9d430e 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #9d430e 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #9d430e 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #9d430e 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #9d430e 22%, #ffffff);
   --season-glow-1: rgba(234,88,12,.25);
   --season-glow-2: rgba(202,138,4,.25);
   --season-card: rgba(255,253,249,.88);
@@ -638,13 +638,13 @@ html:not([data-theme='party'])[data-look='newyear'] {
 
 html:not([data-theme='party'])[data-look='valentines'] {
   --theme-bg: #fdf2f6;
-  --theme-accent: #be185d;
-  --season-bar: color-mix(in srgb, #be185d 10%, #fdf2f6);
-  --season-bar-accent: color-mix(in srgb, #be185d 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #be185d 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #be185d 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #be185d 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #be185d 22%, #ffffff);
+  --theme-accent: #af1656;
+  --season-bar: color-mix(in srgb, #af1656 10%, #fdf2f6);
+  --season-bar-accent: color-mix(in srgb, #af1656 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #af1656 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #af1656 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #af1656 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #af1656 22%, #ffffff);
   --season-glow-1: rgba(244,114,182,.35);
   --season-glow-2: rgba(251,113,133,.25);
   --season-card: rgba(255,255,255,.85);
@@ -654,13 +654,13 @@ html:not([data-theme='party'])[data-look='valentines'] {
 
 html:not([data-theme='party'])[data-look='stpatricks'] {
   --theme-bg: #f0f8f1;
-  --theme-accent: #15803d;
-  --season-bar: color-mix(in srgb, #15803d 10%, #f0f8f1);
-  --season-bar-accent: color-mix(in srgb, #15803d 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #15803d 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #15803d 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #15803d 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #15803d 22%, #ffffff);
+  --theme-accent: #126d34;
+  --season-bar: color-mix(in srgb, #126d34 10%, #f0f8f1);
+  --season-bar-accent: color-mix(in srgb, #126d34 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #126d34 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #126d34 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #126d34 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #126d34 22%, #ffffff);
   --season-glow-1: rgba(34,197,94,.3);
   --season-glow-2: rgba(234,179,8,.22);
   --season-card: rgba(255,255,255,.85);
@@ -702,13 +702,13 @@ html:not([data-theme='party'])[data-look='july4'] {
 
 html:not([data-theme='party'])[data-look='halloween'] {
   --theme-bg: #f8f3ee;
-  --theme-accent: #b4400a;
-  --season-bar: color-mix(in srgb, #b4400a 10%, #f8f3ee);
-  --season-bar-accent: color-mix(in srgb, #b4400a 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #b4400a 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #b4400a 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #b4400a 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #b4400a 22%, #ffffff);
+  --theme-accent: #a43a09;
+  --season-bar: color-mix(in srgb, #a43a09 10%, #f8f3ee);
+  --season-bar-accent: color-mix(in srgb, #a43a09 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #a43a09 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #a43a09 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #a43a09 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #a43a09 22%, #ffffff);
   --season-glow-1: rgba(249,115,22,.32);
   --season-glow-2: rgba(126,34,206,.18);
   --season-card: rgba(255,252,248,.86);
@@ -734,13 +734,13 @@ html:not([data-theme='party'])[data-look='thanksgiving'] {
 
 html:not([data-theme='party'])[data-look='christmas'] {
   --theme-bg: #f6f7f3;
-  --theme-accent: #b91c1c;
-  --season-bar: color-mix(in srgb, #b91c1c 10%, #f6f7f3);
-  --season-bar-accent: color-mix(in srgb, #b91c1c 85%, black);
-  --theme-accent-hover: color-mix(in srgb, #b91c1c 86%, black);
-  --theme-accent-pressed: color-mix(in srgb, #b91c1c 74%, black);
-  --theme-accent-soft: color-mix(in srgb, #b91c1c 14%, #ffffff);
-  --theme-accent-soft-strong: color-mix(in srgb, #b91c1c 22%, #ffffff);
+  --theme-accent: #b31b1b;
+  --season-bar: color-mix(in srgb, #b31b1b 10%, #f6f7f3);
+  --season-bar-accent: color-mix(in srgb, #b31b1b 85%, black);
+  --theme-accent-hover: color-mix(in srgb, #b31b1b 86%, black);
+  --theme-accent-pressed: color-mix(in srgb, #b31b1b 74%, black);
+  --theme-accent-soft: color-mix(in srgb, #b31b1b 14%, #ffffff);
+  --theme-accent-soft-strong: color-mix(in srgb, #b31b1b 22%, #ffffff);
   --season-glow-1: rgba(220,38,38,.2);
   --season-glow-2: rgba(22,101,52,.22);
   --season-card: rgba(255,255,255,.88);

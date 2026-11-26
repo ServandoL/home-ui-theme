@@ -12,8 +12,9 @@ interface Particle {
 
 /**
  * The decorations for the seasonal look: falling leaves, snow, hearts and so on, behind the page.
- * The shell draws a light layer of them in every app; Home draws the full one. Nothing shows while
- * the look is off. They hold still under reduced motion.
+ * The shell draws them in every app: a light layer, or the full one while a page asks for it with
+ * `SeasonalThemeService.fullDecorations` (Home does). Nothing shows while the look is off. They
+ * hold still under reduced motion.
  */
 @Component({
   selector: 'app-seasonal-background',

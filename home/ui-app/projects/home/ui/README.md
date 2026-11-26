@@ -301,9 +301,9 @@ so a tab left open overnight moves on too.
 - The shell's header, bottom tab bar and sidebar become a band of the look's color, one step off
   the page (darker in light mode, lighter in dark), with an accent line on the page side. On
   the light-mode band, faint text and the accent go a shade deeper so they stay readable.
-- The shell draws a light layer of decorations (`<app-seasonal-background intensity="soft">`).
-  Home draws the full layer itself, and puts `app-seasonal-tiles` on its launcher grid so the
-  tiles turn see-through. The decorations hold still under reduced motion.
+- The shell draws the decorations behind every page: a light layer, or the full one while a page
+  sets `SeasonalThemeService.fullDecorations` (Home does, and puts `app-seasonal-tiles` on its
+  launcher grid so the tiles turn see-through). The decorations hold still under reduced motion.
 - `provideHomeTheme({ seasonal: false })` turns it all off for an app.
 - The looks, their dates, greetings and decorations are in `seasonal/seasonal-looks.ts`; their
   colors are at the end of `theme.css`.

@@ -1,6 +1,6 @@
 <div class="relative flex h-dvh app-shell-bg">
   @if (seasonal) {
-    <app-seasonal-background intensity="soft" />
+    <app-seasonal-background [intensity]="seasonalTheme.fullDecorations() ? 'full' : 'soft'" />
   }
   <!-- Desktop sidebar -->
   <app-desktop-sidenav/>

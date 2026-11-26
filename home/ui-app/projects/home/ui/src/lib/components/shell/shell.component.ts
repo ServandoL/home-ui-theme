@@ -12,6 +12,7 @@ import {
 } from '../../providers/shell-account';
 import { ShellLayoutService } from '../../services/shell-layout.service';
 import { SeasonalBackgroundComponent } from '../../seasonal/seasonal-background.component';
+import { SeasonalThemeService } from '../../seasonal/seasonal-theme.service';
 
 @Component({
   selector: 'app-shell',
@@ -31,6 +32,7 @@ export class ShellComponent {
   readonly config = inject(HOME_THEME_TOKEN);
   protected readonly homeLink = this.config.homeLink ?? true;
   protected readonly seasonal = this.config.seasonal ?? true;
+  protected readonly seasonalTheme = inject(SeasonalThemeService);
   protected readonly account = inject(SHELL_ACCOUNT_COMPONENT, { optional: true });
   protected readonly compactAccount = inject(SHELL_ACCOUNT_COMPACT_COMPONENT, { optional: true });
   protected readonly layout = inject(ShellLayoutService);

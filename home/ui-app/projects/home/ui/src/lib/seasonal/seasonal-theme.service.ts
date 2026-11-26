@@ -36,6 +36,11 @@ export class SeasonalThemeService {
     if (choice === 'off') return null;
     return choice === 'auto' ? this.automatic() : choice;
   });
+  /**
+   * Whether the shell draws the full layer of decorations instead of the light one. A page that's
+   * mostly background, like Home's launcher, turns it on while it's open.
+   */
+  readonly fullDecorations = signal(false);
   readonly info = computed<SeasonalLookInfo | null>(() => {
     const look = this.look();
     return look ? SEASONAL_LOOKS[look] : null;
