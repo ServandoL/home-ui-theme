@@ -527,6 +527,25 @@ html[data-look]:not([data-theme='party']) .app-shell-bg {
     var(--theme-bg);
 }
 
+/* The shell's header, bottom tab bar and sidebar: a band of the season's color, one step off the
+   page (darker in light mode, lighter in dark), with an accent line where they meet it. */
+html[data-look]:not([data-theme='party']) .app-shell-bg > app-desktop-sidenav > aside,
+html[data-look]:not([data-theme='party']) .app-shell-bg main > header,
+html[data-look]:not([data-theme='party']) .app-shell-bg > app-mobile-bottom-nav > nav {
+  background-color: color-mix(in srgb, var(--season-bar) 92%, transparent);
+  border-color: color-mix(in srgb, var(--theme-accent) 45%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* On the darker light-mode band, faint text and the accent go a shade deeper to stay readable. */
+html[data-look]:not([data-theme='party']):not([data-theme='dark']) .app-shell-bg > app-desktop-sidenav > aside,
+html[data-look]:not([data-theme='party']):not([data-theme='dark']) .app-shell-bg main > header,
+html[data-look]:not([data-theme='party']):not([data-theme='dark']) .app-shell-bg > app-mobile-bottom-nav > nav {
+  --theme-text-subtle: var(--theme-text-muted);
+  --theme-accent: var(--season-bar-accent);
+}
+
 /* Home's launcher tiles let the decorations show through. */
 html[data-look]:not([data-theme='party']) .app-seasonal-tiles .app-card {
   background-color: var(--season-card);
@@ -541,6 +560,8 @@ html[data-look]:not([data-theme='party']) .app-seasonal-tiles .app-card ng-icon 
 html:not([data-theme='party'])[data-look='spring'] {
   --theme-bg: #f6f8f1;
   --theme-accent: #3f7d4e;
+  --season-bar: color-mix(in srgb, #3f7d4e 10%, #f6f8f1);
+  --season-bar-accent: color-mix(in srgb, #3f7d4e 85%, black);
   --theme-accent-hover: color-mix(in srgb, #3f7d4e 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #3f7d4e 74%, black);
   --theme-accent-soft: color-mix(in srgb, #3f7d4e 14%, #ffffff);
@@ -555,6 +576,8 @@ html:not([data-theme='party'])[data-look='spring'] {
 html:not([data-theme='party'])[data-look='summer'] {
   --theme-bg: #f1f9fb;
   --theme-accent: #0e7490;
+  --season-bar: color-mix(in srgb, #0e7490 10%, #f1f9fb);
+  --season-bar-accent: color-mix(in srgb, #0e7490 85%, black);
   --theme-accent-hover: color-mix(in srgb, #0e7490 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #0e7490 74%, black);
   --theme-accent-soft: color-mix(in srgb, #0e7490 14%, #ffffff);
@@ -569,6 +592,8 @@ html:not([data-theme='party'])[data-look='summer'] {
 html:not([data-theme='party'])[data-look='fall'] {
   --theme-bg: #fbf6ee;
   --theme-accent: #a4460f;
+  --season-bar: color-mix(in srgb, #a4460f 10%, #fbf6ee);
+  --season-bar-accent: color-mix(in srgb, #a4460f 85%, black);
   --theme-accent-hover: color-mix(in srgb, #a4460f 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #a4460f 74%, black);
   --theme-accent-soft: color-mix(in srgb, #a4460f 14%, #ffffff);
@@ -583,6 +608,8 @@ html:not([data-theme='party'])[data-look='fall'] {
 html:not([data-theme='party'])[data-look='winter'] {
   --theme-bg: #eff4fb;
   --theme-accent: #2b5a99;
+  --season-bar: color-mix(in srgb, #2b5a99 10%, #eff4fb);
+  --season-bar-accent: color-mix(in srgb, #2b5a99 85%, black);
   --theme-accent-hover: color-mix(in srgb, #2b5a99 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #2b5a99 74%, black);
   --theme-accent-soft: color-mix(in srgb, #2b5a99 14%, #ffffff);
@@ -597,6 +624,8 @@ html:not([data-theme='party'])[data-look='winter'] {
 html:not([data-theme='party'])[data-look='newyear'] {
   --theme-bg: #f7f5ee;
   --theme-accent: #805300;
+  --season-bar: color-mix(in srgb, #805300 10%, #f7f5ee);
+  --season-bar-accent: color-mix(in srgb, #805300 85%, black);
   --theme-accent-hover: color-mix(in srgb, #805300 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #805300 74%, black);
   --theme-accent-soft: color-mix(in srgb, #805300 14%, #ffffff);
@@ -611,6 +640,8 @@ html:not([data-theme='party'])[data-look='newyear'] {
 html:not([data-theme='party'])[data-look='valentines'] {
   --theme-bg: #fdf2f6;
   --theme-accent: #be185d;
+  --season-bar: color-mix(in srgb, #be185d 10%, #fdf2f6);
+  --season-bar-accent: color-mix(in srgb, #be185d 85%, black);
   --theme-accent-hover: color-mix(in srgb, #be185d 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #be185d 74%, black);
   --theme-accent-soft: color-mix(in srgb, #be185d 14%, #ffffff);
@@ -625,6 +656,8 @@ html:not([data-theme='party'])[data-look='valentines'] {
 html:not([data-theme='party'])[data-look='stpatricks'] {
   --theme-bg: #f0f8f1;
   --theme-accent: #15803d;
+  --season-bar: color-mix(in srgb, #15803d 10%, #f0f8f1);
+  --season-bar-accent: color-mix(in srgb, #15803d 85%, black);
   --theme-accent-hover: color-mix(in srgb, #15803d 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #15803d 74%, black);
   --theme-accent-soft: color-mix(in srgb, #15803d 14%, #ffffff);
@@ -639,6 +672,8 @@ html:not([data-theme='party'])[data-look='stpatricks'] {
 html:not([data-theme='party'])[data-look='easter'] {
   --theme-bg: #f8f5fd;
   --theme-accent: #6d28d9;
+  --season-bar: color-mix(in srgb, #6d28d9 10%, #f8f5fd);
+  --season-bar-accent: color-mix(in srgb, #6d28d9 85%, black);
   --theme-accent-hover: color-mix(in srgb, #6d28d9 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #6d28d9 74%, black);
   --theme-accent-soft: color-mix(in srgb, #6d28d9 14%, #ffffff);
@@ -653,6 +688,8 @@ html:not([data-theme='party'])[data-look='easter'] {
 html:not([data-theme='party'])[data-look='july4'] {
   --theme-bg: #f4f6fb;
   --theme-accent: #1d4ed8;
+  --season-bar: color-mix(in srgb, #1d4ed8 10%, #f4f6fb);
+  --season-bar-accent: color-mix(in srgb, #1d4ed8 85%, black);
   --theme-accent-hover: color-mix(in srgb, #1d4ed8 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #1d4ed8 74%, black);
   --theme-accent-soft: color-mix(in srgb, #1d4ed8 14%, #ffffff);
@@ -667,6 +704,8 @@ html:not([data-theme='party'])[data-look='july4'] {
 html:not([data-theme='party'])[data-look='halloween'] {
   --theme-bg: #f8f3ee;
   --theme-accent: #b4400a;
+  --season-bar: color-mix(in srgb, #b4400a 10%, #f8f3ee);
+  --season-bar-accent: color-mix(in srgb, #b4400a 85%, black);
   --theme-accent-hover: color-mix(in srgb, #b4400a 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #b4400a 74%, black);
   --theme-accent-soft: color-mix(in srgb, #b4400a 14%, #ffffff);
@@ -681,6 +720,8 @@ html:not([data-theme='party'])[data-look='halloween'] {
 html:not([data-theme='party'])[data-look='thanksgiving'] {
   --theme-bg: #faf4ea;
   --theme-accent: #9a3412;
+  --season-bar: color-mix(in srgb, #9a3412 10%, #faf4ea);
+  --season-bar-accent: color-mix(in srgb, #9a3412 85%, black);
   --theme-accent-hover: color-mix(in srgb, #9a3412 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #9a3412 74%, black);
   --theme-accent-soft: color-mix(in srgb, #9a3412 14%, #ffffff);
@@ -695,6 +736,8 @@ html:not([data-theme='party'])[data-look='thanksgiving'] {
 html:not([data-theme='party'])[data-look='christmas'] {
   --theme-bg: #f6f7f3;
   --theme-accent: #b91c1c;
+  --season-bar: color-mix(in srgb, #b91c1c 10%, #f6f7f3);
+  --season-bar-accent: color-mix(in srgb, #b91c1c 85%, black);
   --theme-accent-hover: color-mix(in srgb, #b91c1c 86%, black);
   --theme-accent-pressed: color-mix(in srgb, #b91c1c 74%, black);
   --theme-accent-soft: color-mix(in srgb, #b91c1c 14%, #ffffff);
@@ -709,6 +752,7 @@ html:not([data-theme='party'])[data-look='christmas'] {
 html[data-theme='dark'][data-look='spring'] {
   --theme-bg: #0b130d;
   --theme-accent: #93d6a3;
+  --season-bar: color-mix(in srgb, #93d6a3 10%, #0b130d);
   --theme-accent-hover: color-mix(in srgb, #93d6a3 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #93d6a3 74%, white);
   --theme-accent-soft: color-mix(in srgb, #93d6a3 22%, #0f172a);
@@ -723,6 +767,7 @@ html[data-theme='dark'][data-look='spring'] {
 html[data-theme='dark'][data-look='summer'] {
   --theme-bg: #03141a;
   --theme-accent: #67d8ea;
+  --season-bar: color-mix(in srgb, #67d8ea 10%, #03141a);
   --theme-accent-hover: color-mix(in srgb, #67d8ea 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #67d8ea 74%, white);
   --theme-accent-soft: color-mix(in srgb, #67d8ea 22%, #0f172a);
@@ -737,6 +782,7 @@ html[data-theme='dark'][data-look='summer'] {
 html[data-theme='dark'][data-look='fall'] {
   --theme-bg: #140c05;
   --theme-accent: #f4a764;
+  --season-bar: color-mix(in srgb, #f4a764 10%, #140c05);
   --theme-accent-hover: color-mix(in srgb, #f4a764 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #f4a764 74%, white);
   --theme-accent-soft: color-mix(in srgb, #f4a764 22%, #0f172a);
@@ -751,6 +797,7 @@ html[data-theme='dark'][data-look='fall'] {
 html[data-theme='dark'][data-look='winter'] {
   --theme-bg: #050b18;
   --theme-accent: #a5c8fb;
+  --season-bar: color-mix(in srgb, #a5c8fb 10%, #050b18);
   --theme-accent-hover: color-mix(in srgb, #a5c8fb 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #a5c8fb 74%, white);
   --theme-accent-soft: color-mix(in srgb, #a5c8fb 22%, #0f172a);
@@ -765,6 +812,7 @@ html[data-theme='dark'][data-look='winter'] {
 html[data-theme='dark'][data-look='newyear'] {
   --theme-bg: #06060f;
   --theme-accent: #fcd34d;
+  --season-bar: color-mix(in srgb, #fcd34d 10%, #06060f);
   --theme-accent-hover: color-mix(in srgb, #fcd34d 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #fcd34d 74%, white);
   --theme-accent-soft: color-mix(in srgb, #fcd34d 22%, #0f172a);
@@ -779,6 +827,7 @@ html[data-theme='dark'][data-look='newyear'] {
 html[data-theme='dark'][data-look='valentines'] {
   --theme-bg: #16050d;
   --theme-accent: #f9a8d4;
+  --season-bar: color-mix(in srgb, #f9a8d4 10%, #16050d);
   --theme-accent-hover: color-mix(in srgb, #f9a8d4 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #f9a8d4 74%, white);
   --theme-accent-soft: color-mix(in srgb, #f9a8d4 22%, #0f172a);
@@ -793,6 +842,7 @@ html[data-theme='dark'][data-look='valentines'] {
 html[data-theme='dark'][data-look='stpatricks'] {
   --theme-bg: #03140a;
   --theme-accent: #86efac;
+  --season-bar: color-mix(in srgb, #86efac 10%, #03140a);
   --theme-accent-hover: color-mix(in srgb, #86efac 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #86efac 74%, white);
   --theme-accent-soft: color-mix(in srgb, #86efac 22%, #0f172a);
@@ -807,6 +857,7 @@ html[data-theme='dark'][data-look='stpatricks'] {
 html[data-theme='dark'][data-look='easter'] {
   --theme-bg: #0d0918;
   --theme-accent: #c4b5fd;
+  --season-bar: color-mix(in srgb, #c4b5fd 10%, #0d0918);
   --theme-accent-hover: color-mix(in srgb, #c4b5fd 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #c4b5fd 74%, white);
   --theme-accent-soft: color-mix(in srgb, #c4b5fd 22%, #0f172a);
@@ -821,6 +872,7 @@ html[data-theme='dark'][data-look='easter'] {
 html[data-theme='dark'][data-look='july4'] {
   --theme-bg: #040a1c;
   --theme-accent: #93c5fd;
+  --season-bar: color-mix(in srgb, #93c5fd 10%, #040a1c);
   --theme-accent-hover: color-mix(in srgb, #93c5fd 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #93c5fd 74%, white);
   --theme-accent-soft: color-mix(in srgb, #93c5fd 22%, #0f172a);
@@ -835,6 +887,7 @@ html[data-theme='dark'][data-look='july4'] {
 html[data-theme='dark'][data-look='halloween'] {
   --theme-bg: #0d0614;
   --theme-accent: #fdba74;
+  --season-bar: color-mix(in srgb, #fdba74 10%, #0d0614);
   --theme-accent-hover: color-mix(in srgb, #fdba74 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #fdba74 74%, white);
   --theme-accent-soft: color-mix(in srgb, #fdba74 22%, #0f172a);
@@ -849,6 +902,7 @@ html[data-theme='dark'][data-look='halloween'] {
 html[data-theme='dark'][data-look='thanksgiving'] {
   --theme-bg: #130b04;
   --theme-accent: #fdba74;
+  --season-bar: color-mix(in srgb, #fdba74 10%, #130b04);
   --theme-accent-hover: color-mix(in srgb, #fdba74 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #fdba74 74%, white);
   --theme-accent-soft: color-mix(in srgb, #fdba74 22%, #0f172a);
@@ -863,6 +917,7 @@ html[data-theme='dark'][data-look='thanksgiving'] {
 html[data-theme='dark'][data-look='christmas'] {
   --theme-bg: #06100a;
   --theme-accent: #fca5a5;
+  --season-bar: color-mix(in srgb, #fca5a5 10%, #06100a);
   --theme-accent-hover: color-mix(in srgb, #fca5a5 86%, white);
   --theme-accent-pressed: color-mix(in srgb, #fca5a5 74%, white);
   --theme-accent-soft: color-mix(in srgb, #fca5a5 22%, #0f172a);

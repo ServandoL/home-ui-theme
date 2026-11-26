@@ -298,6 +298,9 @@ so a tab left open overnight moves on too.
 - The service sets `data-look` on `<html>` (nothing while it's off); `theme.css` recolors
   `--theme-bg` and the `--theme-accent` family for each look, in light and dark. The Party theme
   keeps its own colors.
+- The shell's header, bottom tab bar and sidebar become a band of the look's color, one step off
+  the page (darker in light mode, lighter in dark), with an accent line on the page side. On
+  the light-mode band, faint text and the accent go a shade deeper so they stay readable.
 - The shell draws a light layer of decorations (`<app-seasonal-background intensity="soft">`).
   Home draws the full layer itself, and puts `app-seasonal-tiles` on its launcher grid so the
   tiles turn see-through. The decorations hold still under reduced motion.
