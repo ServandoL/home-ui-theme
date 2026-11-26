@@ -19,8 +19,10 @@ interface Particle {
   selector: 'app-seasonal-background',
   host: { 'aria-hidden': 'true', '[class.soft]': "intensity() === 'soft'" },
   styles: `
+    /* Fills the nearest positioned ancestor (the shell's frame, or Home's page) rather than the
+       screen: Safari tints its toolbars from elements fixed at the screen's edges. */
     :host {
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: -1;
       overflow: hidden;

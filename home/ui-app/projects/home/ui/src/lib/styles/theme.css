@@ -522,20 +522,19 @@ html[data-theme='party'] .app-text-accent {
 
 html[data-look]:not([data-theme='party']) .app-shell-bg {
   background:
-    radial-gradient(120% 80% at 85% -10%, var(--season-glow-1), transparent 60%) fixed,
-    radial-gradient(90% 70% at -10% 110%, var(--season-glow-2), transparent 60%) fixed,
+    radial-gradient(120% 80% at 85% -10%, var(--season-glow-1), transparent 60%),
+    radial-gradient(90% 70% at -10% 110%, var(--season-glow-2), transparent 60%),
     var(--theme-bg);
 }
 
-/* The shell's header, bottom tab bar and sidebar: a band of the season's color, one step off the
-   page (darker in light mode, lighter in dark), with an accent line where they meet it. */
+/* The shell's header, bottom tab bar and sidebar: a solid band of the season's color, one step off
+   the page (darker in light mode, lighter in dark), with an accent line where they meet it. */
 html[data-look]:not([data-theme='party']) .app-shell-bg > app-desktop-sidenav > aside,
 html[data-look]:not([data-theme='party']) .app-shell-bg main > header,
 html[data-look]:not([data-theme='party']) .app-shell-bg > app-mobile-bottom-nav > nav {
-  background-color: color-mix(in srgb, var(--season-bar) 92%, transparent);
+  /* Solid: Safari colors its own top and bottom bars from what's fixed at those edges. */
+  background-color: var(--season-bar);
   border-color: color-mix(in srgb, var(--theme-accent) 45%, transparent);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 /* On the darker light-mode band, faint text and the accent go a shade deeper to stay readable. */
